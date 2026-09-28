@@ -97,6 +97,7 @@ struct HelpView: View {
         ("Passwort-Ablage wählen", "Unter Einstellungen je Profil festlegen, wohin erzeugte Passwörter gehen: nur ins Ergebnis, in den Schlüsselbund, nach Bitwarden (Ordner oder Organisation und Sammlung) oder 1Password (Tresor). Bitwarden dort entsperren; Zugänge aus Claude warten bis dahin im Schlüsselbund."),
         ("Mittwald anbinden", "Im mStudio unter Profil → API-Tokens einen Token mit Rolle api_write und Ablaufdatum erzeugen und hier eintragen. Der Token erbt die Rechte Ihres Nutzers; Kunden oder Mitarbeiter laden Sie im mStudio mit Rolle ein, jede Person nutzt einen eigenen Token als eigene Verbindung. Projekt-ID nur setzen, wenn eine Verbindung genau ein Projekt bedienen soll."),
         ("Hostinger anbinden", "Im hPanel unter Profil → API einen Token mit Ablaufdatum erzeugen und hier eintragen. Der Token hat alle Rechte Ihres Kontos, Kastellan grenzt über Rechte und Zuordnung ein. Die API erlaubt 90 Aufrufe pro Minute; Kastellan wartet bei Überschreitung kurz."),
+        ("Aktualisieren", "Kastellan sucht beim Start und danach alle 24 Stunden nach einer neuen Version, lädt sie im Hintergrund und installiert sie beim nächsten Beenden. Abschalten und sofort suchen unter Einstellungen → Updates oder im App-Menü „Nach Updates suchen …“."),
         ("Zuordnung pflegen", "Unter Verbindungen festlegen, welche Verbindung für welche Domain und Ressource zuständig ist. Dann kommen Tools ohne connection_id aus."),
     ]
 

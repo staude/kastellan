@@ -21,6 +21,8 @@ Welche Aktionen ein Anbieter tatsächlich kann, zeigt die App je Verbindung an. 
 
 Die fertige App liegt unter [Releases](../../releases): DMG laden, `Kastellan.app` nach Programme ziehen, starten. Die App ist mit Developer ID signiert und von Apple notarisiert. Voraussetzung ist macOS 14 oder neuer.
 
+Ab Version 0.2.0 aktualisiert sich Kastellan selbst: beim Start und danach alle 24 Stunden prüft die App, ob es eine neue Version gibt, lädt sie im Hintergrund und installiert sie beim nächsten Beenden. Abschalten lässt sich das unter Einstellungen → Updates.
+
 Danach in der App:
 1. Unter Verbindungen den ersten Hoster anlegen. Zugangsdaten landen im macOS-Schlüsselbund.
 2. Unter Rechte festlegen, was ein Assistent je Verbindung darf: keine, lesen, schreiben oder verwalten.
@@ -65,7 +67,7 @@ Voraussetzungen: Xcode 16 oder neuer (Swift 6) und [XcodeGen](https://github.com
 xcodebuild -project Kastellan.xcodeproj -scheme Kastellan -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
 ```
 
-Für einen signierten Build `DEVELOPMENT_TEAM` in `project.yml` auf das eigene Team setzen und `tools/build-and-install.sh` ausführen. App und MCP-Server müssen mit demselben Team signiert sein, sonst können sie die gemeinsamen Schlüsselbund-Einträge nicht lesen. `tools/package-release.sh` baut, signiert mit Developer ID, notarisiert und packt DMG und ZIP.
+Für einen signierten Build `DEVELOPMENT_TEAM` in `project.yml` auf das eigene Team setzen und `tools/build-and-install.sh` ausführen. App und MCP-Server müssen mit demselben Team signiert sein, sonst können sie die gemeinsamen Schlüsselbund-Einträge nicht lesen. `tools/package-release.sh` baut, signiert mit Developer ID, notarisiert, packt DMG und ZIP und erzeugt den Update-Feed `appcast.xml`. Dafür braucht es den Sparkle-Schlüssel des Projekts im Schlüsselbund; wer selbst verteilt, legt mit `generate_keys --account kastellan` einen eigenen an und trägt dessen öffentlichen Teil als `SUPublicEDKey` in `Kastellan/Info.plist` ein.
 
 ## Lizenz
 

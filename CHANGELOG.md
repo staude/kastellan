@@ -6,6 +6,19 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-28
+
+### Added
+
+- Automatische Updates nach TorroMail-Vorbild mit Sparkle 2: Kastellan prüft beim Start und danach alle 24 Stunden gegen den Feed `appcast.xml` im neuesten GitHub-Release, lädt neue Versionen im Hintergrund und installiert sie beim nächsten Beenden. Jedes DMG ist zusätzlich mit einem eigenen Ed25519-Schlüssel signiert, den Sparkle vor der Installation prüft.
+- Einstellungen → Updates: automatische Prüfung ein- und ausschalten, jetzt suchen, Zeitpunkt der letzten Prüfung. Im App-Menü „Nach Updates suchen …“.
+- `tools/package-release.sh` signiert das DMG für Sparkle und erzeugt `appcast.xml` mit den Changelog-Notizen der Version.
+
+### Hinweis
+
+- Version 0.1.0 hat noch keinen Updater. Wer 0.1.0 installiert hat, lädt 0.2.0 einmal von Hand; ab dann kommen Updates automatisch.
+- Entwickler-Builds (Debug) aktualisieren sich nie selbst.
+
 ## [0.1.0] - 2026-09-28
 
 Erste weitergebbare Version: macOS-App mit MCP-Server, sechs Provider (All-Inkl KAS, Cloudflare, Hetzner Cloud, hosting.de, Mittwald, Hostinger), Profile, Rechte je Verbindung und Client, Freigaben, Protokoll, Passwort-Ablage in Schlüsselbund, Bitwarden oder 1Password. Das Paket ist mit Developer ID signiert und von Apple notarisiert. `tools/package-release.sh` baut Archiv, Export, Notarisierung und Paket in einem Lauf. Fehler-Telemetrie ist standardmäßig aus und wird in den Einstellungen, mit `KASTELLAN_TELEMETRY=on` oder einer eigenen DSN eingeschaltet. Erste öffentliche Version; die Nummern früherer Issues und PRs in diesem Changelog beziehen sich auf das nicht öffentliche Entwicklungs-Repo.

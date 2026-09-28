@@ -48,6 +48,8 @@ struct SettingsView: View {
                 }
                 caption("Tokens, Einträge für Claude Code und Claude Desktop sowie die Rechte je Client liegen in den Bereichen MCP-Clients und Rechte.")
 
+                UpdatesCard()
+
                 Card(title: "Telemetrie") {
                     CardRow(last: true) {
                         Text("Fehler an telemetrie.staude.cc melden"); Spacer()
@@ -74,5 +76,38 @@ struct SettingsView: View {
 
     private func caption(_ text: String) -> some View {
         Text(text).kFont(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .trailing).padding(.top, -12)
+    }
+}
+
+/// Updates nach TorroMail-Vorbild: automatisch alle 24 Stunden, oder sofort per Knopf.
+private struct UpdatesCard: View {
+    @State private var updater = UpdaterController.shared
+
+    var body: some View {
+        Card(title: "Updates") {
+            CardRow {
+                Text("Automatisch nach Updates suchen"); Spacer()
+                Toggle("Automatisch nach Updates suchen", isOn: $updater.automaticallyChecksForUpdates)
+                    .toggleStyle(.switch).labelsHidden().disabled(!updater.isAvailable)
+            }
+            CardRow(last: true) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?")")
+                    Text(statusText).kFont(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("Jetzt suchen") { updater.checkForUpdates() }.disabled(!updater.isAvailable)
+            }
+        }
+        Text(updater.isAvailable
+             ? "Kastellan prüft beim Start und danach alle 24 Stunden, ob es eine neue Version gibt. Updates laden im Hintergrund und werden beim nächsten Beenden installiert."
+             : "Dieser Build aktualisiert sich nicht selbst (Entwickler-Build). Neue Versionen gibt es unter github.com/staude/kastellan/releases.")
+            .kFont(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .trailing).padding(.top, -12)
+    }
+
+    private var statusText: String {
+        guard updater.isAvailable else { return "Automatische Updates nicht verfügbar" }
+        guard let date = updater.lastUpdateCheckDate else { return "Noch nicht geprüft" }
+        return "Zuletzt geprüft: \(date.formatted(date: .abbreviated, time: .shortened))"
     }
 }
