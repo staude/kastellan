@@ -1,0 +1,10 @@
+{
+  "ssh_key": {
+    "id": 2325,
+    "name": "kastellan-20260906",
+    "fingerprint": "d9:4b:52:c2:41:8e:7a:8e:43:26:7a:83:dc:28:5d:41",
+    "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleKeyNew kastellan",
+    "labels": {},
+    "created": "2026-09-06T10:00:00Z"
+  }
+}

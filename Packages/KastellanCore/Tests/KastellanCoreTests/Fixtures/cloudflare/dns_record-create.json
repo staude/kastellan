@@ -1,0 +1,22 @@
+{
+  "result": {
+    "id": "b7c8d9e0f1a2b3c4d5e6f708192a3b4c",
+    "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "zone_name": "example.com",
+    "name": "planer.example.com",
+    "type": "A",
+    "content": "203.0.113.10",
+    "proxiable": true,
+    "proxied": false,
+    "ttl": 1,
+    "settings": {},
+    "meta": {},
+    "comment": null,
+    "tags": [],
+    "created_on": "2026-09-06T18:00:00.000000Z",
+    "modified_on": "2026-09-06T18:00:00.000000Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

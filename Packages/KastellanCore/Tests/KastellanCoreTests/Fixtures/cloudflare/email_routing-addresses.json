@@ -1,0 +1,24 @@
+{
+  "result": [
+    {
+      "id": "ea95fb1f9e3a4a3f9a6a8a2d1c0b9a8e",
+      "tag": "ea95fb1f9e3a4a3f9a6a8a2d1c0b9a8e",
+      "email": "user@example.com",
+      "verified": "2024-04-01T10:00:00Z",
+      "created": "2024-04-01T09:55:00Z",
+      "modified": "2024-04-01T10:00:00Z"
+    },
+    {
+      "id": "fb06ac2f0f4b5b4faa7b9b3e2d1c0b9f",
+      "tag": "fb06ac2f0f4b5b4faa7b9b3e2d1c0b9f",
+      "email": "old@example.net",
+      "verified": null,
+      "created": "2026-09-01T12:00:00Z",
+      "modified": "2026-09-01T12:00:00Z"
+    }
+  ],
+  "result_info": {"page": 1, "per_page": 100, "total_pages": 1, "count": 2, "total_count": 2},
+  "success": true,
+  "errors": [],
+  "messages": []
+}

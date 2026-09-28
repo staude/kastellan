@@ -1,0 +1,24 @@
+{
+  "rrset": {
+    "id": "api/A",
+    "name": "api",
+    "type": "A",
+    "ttl": 600,
+    "labels": {},
+    "protection": {"change": false},
+    "records": [
+      {"value": "203.0.113.10"}
+    ],
+    "zone": 42
+  },
+  "action": {
+    "id": 1001,
+    "command": "create_rrset",
+    "status": "running",
+    "progress": 0,
+    "started": "2025-09-06T09:00:00Z",
+    "finished": null,
+    "resources": [{"id": 42, "type": "zone"}],
+    "error": null
+  }
+}

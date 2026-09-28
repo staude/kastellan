@@ -1,0 +1,16 @@
+{
+  "result": {
+    "deletes": [
+      {"id": "1a2b3c4d5e6f708192a3b4c5d6e7f809", "zone_id": "023e105f4ecef8ad9ca31a8372d0c353", "zone_name": "example.com", "name": "_dmarc.example.com", "type": "TXT", "content": "\"v=DMARC1; p=quarantine\"", "ttl": 300, "proxied": false}
+    ],
+    "patches": [
+      {"id": "4c7b3d2e1f0a9b8c7d6e5f4a3b2c1d0e", "zone_id": "023e105f4ecef8ad9ca31a8372d0c353", "zone_name": "example.com", "name": "www.example.com", "type": "CNAME", "content": "neu.example.com", "ttl": 1, "proxied": true, "comment": "Weiterleitung auf den Apex"}
+    ],
+    "posts": [
+      {"id": "c9d0e1f2a3b4c5d6e7f8091a2b3c4d5e", "zone_id": "023e105f4ecef8ad9ca31a8372d0c353", "zone_name": "example.com", "name": "api.example.com", "type": "A", "content": "203.0.113.20", "ttl": 1, "proxied": false}
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

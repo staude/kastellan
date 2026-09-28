@@ -1,0 +1,7 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-vh002"},
+  "response": {"id": "vh-9", "accountId": "acc-42", "webspaceId": "ws-1", "domainName": "neu.example.com", "domainNameUnicode": "neu.example.com", "enableAlias": false,
+               "serverType": "nginx", "phpVersion": "8.3", "webRoot": "neu", "status": "creating", "sslSettings": null,
+               "locations": [{"locationType": "generic", "matchType": "default", "matchString": "", "phpEnabled": true, "directoryListingEnabled": false}]},
+  "status": "pending", "warnings": []
+}

@@ -1,0 +1,22 @@
+{
+  "result": {
+    "id": "4c7b3d2e1f0a9b8c7d6e5f4a3b2c1d0e",
+    "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
+    "zone_name": "example.com",
+    "name": "www.example.com",
+    "type": "CNAME",
+    "content": "neu.example.com",
+    "proxiable": true,
+    "proxied": true,
+    "ttl": 1,
+    "settings": {},
+    "meta": {},
+    "comment": "Weiterleitung auf den Apex",
+    "tags": [],
+    "created_on": "2024-03-12T09:00:00.000000Z",
+    "modified_on": "2026-09-06T18:05:00.000000Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

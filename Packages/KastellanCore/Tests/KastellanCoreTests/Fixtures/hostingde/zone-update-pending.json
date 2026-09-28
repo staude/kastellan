@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-upd001"},
+  "response": {
+    "zoneConfig": {"id": "zc-1001", "accountId": "acc-42", "name": "example.com", "nameUnicode": "example.com", "type": "NATIVE", "status": "blocked", "lastChangeDate": "2026-09-08T08:00:00Z"},
+    "records": [
+      {"id": "rec-1", "zoneId": "zc-1001", "name": "example.com", "type": "A", "content": "192.0.2.10", "ttl": 3600, "lastChangeDate": "2026-08-01T10:00:00Z"},
+      {"id": "rec-9", "zoneId": "zc-1001", "name": "_kastellan.example.com", "type": "TXT", "content": "\"probe\"", "ttl": 300, "lastChangeDate": "2026-09-08T08:00:00Z"}
+    ]
+  },
+  "status": "pending",
+  "warnings": [
+    {"code": 33001, "contextPath": "/recordsToAdd/0/ttl", "text": "TTL raised to minimum of 60 seconds", "value": "60"}
+  ]
+}

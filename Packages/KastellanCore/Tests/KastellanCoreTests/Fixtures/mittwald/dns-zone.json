@@ -1,0 +1,12 @@
+{
+  "id": "z1111111-1111-4111-8111-111111111111",
+  "domain": "example.com",
+  "recordSet": {
+    "combinedARecords": {"managedBy": {"ingressId": "i1111111-1111-4111-8111-111111111111"}},
+    "mx": {"records": [{"fqdn": "mx2.example.net", "priority": 20}, {"fqdn": "mx1.example.net", "priority": 10}], "settings": {"ttl": {"seconds": 3600}}},
+    "txt": {"entries": ["v=spf1 include:example.net -all", "_kastellan=probe"], "settings": {"ttl": {"auto": true}}},
+    "srv": {"records": [{"fqdn": "sip.example.com", "port": 5060, "priority": 10, "weight": 5}], "settings": {"ttl": {"seconds": 300}}},
+    "cname": {},
+    "caa": {"records": [{"flags": 0, "tag": "issue", "value": "letsencrypt.org"}], "settings": {"ttl": {"seconds": 3600}}}
+  }
+}

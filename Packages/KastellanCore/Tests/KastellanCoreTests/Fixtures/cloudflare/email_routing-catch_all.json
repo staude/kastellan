@@ -1,0 +1,13 @@
+{
+  "result": {
+    "id": "e1c0df11947a85bce1d7557a0a8ce4e0",
+    "tag": "e1c0df11947a85bce1d7557a0a8ce4e0",
+    "name": "Send to user@example.net rule.",
+    "enabled": true,
+    "matchers": [{"type": "all"}],
+    "actions": [{"type": "forward", "value": ["user@example.com"]}]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

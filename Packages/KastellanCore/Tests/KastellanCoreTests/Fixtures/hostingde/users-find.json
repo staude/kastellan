@@ -1,0 +1,10 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-us001"},
+  "response": {
+    "data": [
+      {"id": "u-1", "accountId": "acc-42", "name": "Admin", "userName": "webabc123_admin", "comments": "", "sshKey": "ssh-ed25519 AAAAC3example1 admin@example\nssh-ed25519 AAAAC3example2 laptop@example", "status": "active", "addDate": "2026-01-01T00:00:00Z", "lastChangeDate": "2026-01-01T00:00:00Z"}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 1, "totalPages": 1, "type": "FindUsersResult"
+  },
+  "status": "success", "warnings": []
+}

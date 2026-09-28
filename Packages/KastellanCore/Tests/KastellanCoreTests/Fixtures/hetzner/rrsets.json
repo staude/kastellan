@@ -1,0 +1,77 @@
+{
+  "rrsets": [
+    {
+      "id": "@/A",
+      "name": "@",
+      "type": "A",
+      "ttl": 3600,
+      "labels": {},
+      "protection": {"change": false},
+      "records": [
+        {"value": "198.51.100.1", "comment": "Webserver"}
+      ],
+      "zone": 42
+    },
+    {
+      "id": "www/A",
+      "name": "www",
+      "type": "A",
+      "ttl": null,
+      "labels": {"managed-by": "kastellan"},
+      "protection": {"change": false},
+      "records": [
+        {"value": "198.51.100.2"},
+        {"value": "198.51.100.1"}
+      ],
+      "zone": 42
+    },
+    {
+      "id": "@/MX",
+      "name": "@",
+      "type": "MX",
+      "ttl": 7200,
+      "labels": {},
+      "protection": {"change": true},
+      "records": [
+        {"value": "10 mail.example.com.", "comment": "Mail"}
+      ],
+      "zone": 42
+    },
+    {
+      "id": "@/NS",
+      "name": "@",
+      "type": "NS",
+      "ttl": 86400,
+      "labels": {},
+      "protection": {"change": false},
+      "records": [
+        {"value": "hydrogen.ns.hetzner.com."},
+        {"value": "oxygen.ns.hetzner.com."},
+        {"value": "helium.ns.hetzner.de."}
+      ],
+      "zone": 42
+    },
+    {
+      "id": "_dmarc/TXT",
+      "name": "_dmarc",
+      "type": "TXT",
+      "ttl": 3600,
+      "labels": {},
+      "protection": {"change": false},
+      "records": [
+        {"value": "\"v=DMARC1; p=none; rua=mailto:dmarc@example.com\""}
+      ],
+      "zone": 42
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 50,
+      "previous_page": null,
+      "next_page": null,
+      "last_page": 1,
+      "total_entries": 5
+    }
+  }
+}

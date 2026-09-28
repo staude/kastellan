@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "a7e6fb77503c41d8a7f3113c6c4ea0a6",
+    "tag": "a7e6fb77503c41d8a7f3113c6c4ea0a6",
+    "name": "Info an Max",
+    "enabled": true,
+    "priority": 0,
+    "matchers": [{"type": "literal", "field": "to", "value": "info@example.com"}],
+    "actions": [{"type": "forward", "value": ["user@example.com"]}]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

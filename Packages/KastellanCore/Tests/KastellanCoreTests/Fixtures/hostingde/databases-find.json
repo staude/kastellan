@@ -1,0 +1,14 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-db001"},
+  "response": {
+    "data": [
+      {"id": "db-1", "accountId": "acc-42", "bundleId": null, "poolId": null, "name": "Shop", "productCode": "database-mariadb-single-v1-12m", "status": "active",
+       "storageQuota": 512, "storageQuotaIncluded": 512, "storageQuotaUsedRatio": 10, "storageUsed": 51, "dbName": "dbabc123", "hostName": "dbabc123.mariadb.routing.zone",
+       "dbEngine": "MariaDB", "dbType": "single", "forceSsl": false, "restrictions": [], "limitations": [],
+       "accesses": [{"userId": "dbu-1", "userName": "dbabc123_shop", "databaseId": "db-1", "accessLevel": ["read", "write", "schema"], "addDate": "2026-01-01T00:00:00Z", "lastChangeDate": "2026-01-01T00:00:00Z"}],
+       "paidUntil": "2027-01-01T00:00:00Z", "renewOn": "2026-12-31T00:00:00Z", "deletionScheduledFor": null, "restorableUntil": null, "addDate": "2026-01-01T00:00:00Z", "lastChangeDate": "2026-01-01T00:00:00Z"}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 1, "totalPages": 1, "type": "FindDatabasesResult"
+  },
+  "status": "success", "warnings": []
+}

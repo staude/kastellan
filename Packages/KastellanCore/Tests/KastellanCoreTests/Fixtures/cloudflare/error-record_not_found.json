@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "errors": [{"code": 81044, "message": "Record does not exist."}, {"code": 1004, "message": "DNS Validation Error"}],
+  "messages": [],
+  "result": null
+}

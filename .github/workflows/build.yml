@@ -1,0 +1,44 @@
+name: Build
+
+# macOS-Runner bei GitHub zählen zehnfach. Deshalb: nur bei Pull Requests, ein Job, laufende Runs
+# desselben Branches werden abgebrochen. Der App-Build ist manuell auslösbar. Sobald ein eigener
+# Runner registriert ist, runs-on auf [self-hosted, macOS] umstellen, dann kostet es nichts.
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'tools/**'
+      - '.github/**'
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-tests:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: KastellanCore testen
+        env:
+          KASTELLAN_SKIP_KEYCHAIN_TESTS: "1"
+        run: swift test --package-path Packages/KastellanCore
+
+  app-build:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: XcodeGen installieren
+        run: brew install xcodegen
+      - name: Projekt generieren
+        run: xcodegen generate
+      - name: App bauen (ohne Signatur)
+        run: |
+          xcodebuild -project Kastellan.xcodeproj -scheme Kastellan \
+            -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO \
+            -skipPackagePluginValidation build | tail -20

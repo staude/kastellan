@@ -1,0 +1,15 @@
+{
+  "errors": [],
+  "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-rec001"},
+  "response": {
+    "data": [
+      {"id": "rec-1", "zoneId": "zc-1001", "name": "example.com", "type": "A", "content": "192.0.2.10", "ttl": 3600, "lastChangeDate": "2026-08-01T10:00:00Z"},
+      {"id": "rec-2", "zoneId": "zc-1001", "name": "example.com", "type": "MX", "content": "mail.example.com", "ttl": 3600, "priority": 10, "lastChangeDate": "2026-08-01T10:00:00Z"},
+      {"id": "rec-3", "zoneId": "zc-1001", "name": "www.example.com", "type": "CNAME", "content": "example.com", "ttl": 300, "lastChangeDate": "2026-08-01T10:00:00Z"},
+      {"id": "rec-4", "zoneId": "zc-1001", "name": "example.com", "type": "TXT", "content": "\"v=spf1 mx -all\"", "ttl": 3600, "lastChangeDate": "2026-08-01T10:00:00Z"}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 4, "totalPages": 1, "type": "FindRecordsResult"
+  },
+  "status": "success",
+  "warnings": []
+}

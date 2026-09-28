@@ -1,0 +1,13 @@
+{
+  "result": {
+    "id": "f2d1e022058b96cdf2e8668b1b9df5f1",
+    "tag": "f2d1e022058b96cdf2e8668b1b9df5f1",
+    "name": "Kastellan: Catch-all",
+    "enabled": false,
+    "matchers": [{"type": "all"}],
+    "actions": [{"type": "drop"}]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {"code": 32002, "contextObject": "", "contextPath": "/recordsToAdd/0/ttl", "details": [{"key": "min", "value": "60"}], "text": "TTL must be at least 60 seconds", "value": "10"}
+  ],
+  "metadata": {"clientTransactionId": "kastellan-1", "serverTransactionId": "20260908-err002"},
+  "response": null,
+  "status": "error",
+  "warnings": []
+}

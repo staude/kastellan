@@ -1,0 +1,53 @@
+{
+  "result": [
+    {
+      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+      "name": "example.com",
+      "status": "active",
+      "paused": false,
+      "type": "full",
+      "development_mode": 0,
+      "name_servers": ["ada.ns.cloudflare.com", "rob.ns.cloudflare.com"],
+      "original_name_servers": ["ns1.all-inkl.com", "ns2.all-inkl.com"],
+      "original_registrar": null,
+      "original_dnshost": null,
+      "modified_on": "2026-08-01T10:00:00.000000Z",
+      "created_on": "2024-03-12T08:15:00.000000Z",
+      "activated_on": "2024-03-12T09:00:00.000000Z",
+      "meta": {"step": 2, "custom_certificate_quota": 0, "page_rule_quota": 3, "phishing_detected": false},
+      "owner": {"id": null, "type": "user", "email": null},
+      "account": {"id": "a1b2c3d4e5f60718293a4b5c6d7e8f90", "name": "Max"},
+      "tenant": {"id": null, "name": null},
+      "tenant_unit": {"id": null},
+      "permissions": ["#dns_records:edit", "#dns_records:read", "#zone:read"],
+      "plan": {
+        "id": "0feeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "name": "Free Website",
+        "price": 0,
+        "currency": "USD",
+        "frequency": "",
+        "is_subscribed": false,
+        "can_subscribe": false,
+        "legacy_id": "free",
+        "legacy_discount": false,
+        "externally_managed": false
+      }
+    },
+    {
+      "id": "9a7806061c88ada191ed06f989cc3dac",
+      "name": "beispiel-zone.de",
+      "status": "pending",
+      "paused": false,
+      "type": "full",
+      "name_servers": ["ada.ns.cloudflare.com", "rob.ns.cloudflare.com"],
+      "modified_on": "2026-08-20T10:00:00.000000Z",
+      "created_on": "2026-08-20T10:00:00.000000Z",
+      "account": {"id": "a1b2c3d4e5f60718293a4b5c6d7e8f90", "name": "Max"},
+      "plan": {"id": "94f3b7b768b0458b56d2cac4fe5ec0f9", "name": "Pro Website", "legacy_id": "pro"}
+    }
+  ],
+  "result_info": {"page": 1, "per_page": 100, "total_pages": 1, "count": 2, "total_count": 2},
+  "success": true,
+  "errors": [],
+  "messages": []
+}

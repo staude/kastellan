@@ -1,0 +1,29 @@
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xcworkspace/xcuserdata/
+
+# XcodeGen erzeugt .xcodeproj aus project.yml, nicht einchecken
+Kastellan.xcodeproj/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/KastellanCore/.build/
+Package.resolved
+
+# macOS
+.DS_Store
+
+# Secrets und lokale Konfiguration
+Local.xcconfig
+*.p12
+*.mobileprovision
+.env
+fixtures-raw/
+
+# Claude-Worktrees und Sitzungsdaten
+.claude/

@@ -1,0 +1,55 @@
+{
+  "zones": [
+    {
+      "id": 42,
+      "name": "example.com",
+      "mode": "primary",
+      "created": "2025-09-01T10:15:00Z",
+      "primary_nameservers": [],
+      "labels": {"environment": "prod"},
+      "protection": {"delete": false},
+      "ttl": 10800,
+      "status": "ok",
+      "record_count": 7,
+      "authoritative_nameservers": {
+        "assigned": ["hydrogen.ns.hetzner.com.", "oxygen.ns.hetzner.com.", "helium.ns.hetzner.de."],
+        "delegated": ["hydrogen.ns.hetzner.com.", "oxygen.ns.hetzner.com.", "helium.ns.hetzner.de."],
+        "delegation_last_check": "2025-09-05T08:00:00Z",
+        "delegation_status": "valid"
+      },
+      "registrar": "other"
+    },
+    {
+      "id": 43,
+      "name": "example.com",
+      "mode": "secondary",
+      "created": "2025-09-02T12:00:00Z",
+      "primary_nameservers": [
+        {"address": "198.51.100.1", "port": 53},
+        {"address": "203.0.113.1", "port": 5353}
+      ],
+      "labels": {},
+      "protection": {"delete": true},
+      "ttl": 3600,
+      "status": "updating",
+      "record_count": 12,
+      "authoritative_nameservers": {
+        "assigned": ["hydrogen.ns.hetzner.com.", "oxygen.ns.hetzner.com.", "helium.ns.hetzner.de."],
+        "delegated": [],
+        "delegation_last_check": null,
+        "delegation_status": "unknown"
+      },
+      "registrar": "unknown"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 50,
+      "previous_page": null,
+      "next_page": null,
+      "last_page": 1,
+      "total_entries": 2
+    }
+  }
+}

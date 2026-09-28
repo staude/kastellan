@@ -1,0 +1,13 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-ws001"},
+  "response": {
+    "data": [
+      {"id": "ws-1", "accountId": "acc-42", "name": "Hauptwebspace", "webspaceName": "webabc123", "productCode": "webhosting-medium-12m", "status": "active",
+       "hostName": "webabc123.wh.hosting.zone", "serverIpv4": "192.0.2.20", "storageQuota": 30720, "storageQuotaUsed": 1024, "phpExecutionTime": 60, "phpMemory": 256,
+       "accesses": [{"userId": "u-1", "userName": "webabc123_admin", "ftpAccess": true, "sshAccess": true, "statsAccess": false, "homeDir": ""}],
+       "cronJobs": []}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 1, "totalPages": 1, "type": "FindWebspacesResult"
+  },
+  "status": "success", "warnings": []
+}

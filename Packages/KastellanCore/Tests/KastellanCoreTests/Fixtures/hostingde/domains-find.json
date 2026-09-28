@@ -1,0 +1,16 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-dom001"},
+  "response": {
+    "data": [
+      {"id": "dom-1", "accountId": "acc-42", "name": "example.com", "nameUnicode": "example.com", "status": ["ok"], "transferLockEnabled": true,
+       "contacts": [{"contact": "c-1", "type": "owner"}, {"contact": "c-2", "type": "admin"}],
+       "nameservers": [{"name": "ns1.hosting.de", "ips": []}, {"name": "ns2.hosting.de", "ips": []}],
+       "createDate": "2020-01-01", "currentContractPeriodEnd": "2026-12-31", "nextContractPeriodStart": "2027-01-01", "deletionType": "", "deletionDate": ""},
+      {"id": "dom-2", "accountId": "acc-42", "name": "example.net", "nameUnicode": "example.net", "status": ["ok"], "transferLockEnabled": false,
+       "contacts": [], "nameservers": [{"name": "ns.example.org", "ips": ["192.0.2.1"]}],
+       "createDate": "2021-05-05", "currentContractPeriodEnd": "2027-05-04", "deletionType": "withdraw", "deletionDate": "2027-05-04"}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 2, "totalPages": 1, "type": "FindDomainsResult"
+  },
+  "status": "success", "warnings": []
+}

@@ -1,0 +1,54 @@
+{
+  "server": {
+    "id": 44,
+    "name": "app-01",
+    "status": "initializing",
+    "created": "2025-09-06T09:00:00Z",
+    "public_net": {
+      "ipv4": {"id": 4720, "ip": "203.0.113.44", "blocked": false, "dns_ptr": "static.44.113.0.203.clients.your-server.de"},
+      "ipv6": {"id": 4721, "ip": "2001:db8:44::/64", "blocked": false, "dns_ptr": []},
+      "floating_ips": [],
+      "firewalls": []
+    },
+    "private_net": [],
+    "server_type": {"id": 22, "name": "cpx22", "description": "CPX22", "cores": 2, "memory": 4, "disk": 80, "cpu_type": "shared", "architecture": "x86"},
+    "location": {"id": 2, "name": "nbg1", "description": "Nuremberg DC Park 1", "country": "DE", "city": "Nuremberg", "network_zone": "eu-central"},
+    "image": {"id": 114690389, "type": "system", "status": "available", "name": "ubuntu-24.04", "description": "Ubuntu 24.04", "os_flavor": "ubuntu", "os_version": "24.04", "architecture": "x86"},
+    "iso": null,
+    "rescue_enabled": false,
+    "locked": true,
+    "backup_window": null,
+    "outgoing_traffic": null,
+    "ingoing_traffic": null,
+    "included_traffic": 21990232555520,
+    "protection": {"delete": false, "rebuild": false},
+    "labels": {"env": "staging"},
+    "volumes": [],
+    "load_balancers": [],
+    "primary_disk_size": 80,
+    "placement_group": null
+  },
+  "action": {
+    "id": 2001,
+    "command": "create_server",
+    "status": "running",
+    "progress": 0,
+    "started": "2025-09-06T09:00:00Z",
+    "finished": null,
+    "resources": [{"id": 44, "type": "server"}],
+    "error": null
+  },
+  "next_actions": [
+    {
+      "id": 2002,
+      "command": "start_server",
+      "status": "running",
+      "progress": 0,
+      "started": "2025-09-06T09:00:00Z",
+      "finished": null,
+      "resources": [{"id": 44, "type": "server"}],
+      "error": null
+    }
+  ],
+  "root_password": "YItygq1v3GYjjMomLaKc"
+}

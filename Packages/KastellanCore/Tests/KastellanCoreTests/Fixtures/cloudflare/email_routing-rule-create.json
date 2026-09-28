@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "1d28ce4b2b6d7d60cc9dbd5a4f3e2d11",
+    "tag": "1d28ce4b2b6d7d60cc9dbd5a4f3e2d11",
+    "name": "Kastellan: neu@example.com",
+    "enabled": true,
+    "priority": 4,
+    "matchers": [{"type": "literal", "field": "to", "value": "neu@example.com"}],
+    "actions": [{"type": "forward", "value": ["neu@example.org"]}]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

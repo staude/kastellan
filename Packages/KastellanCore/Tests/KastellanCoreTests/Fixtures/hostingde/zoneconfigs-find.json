@@ -1,0 +1,37 @@
+{
+  "errors": [],
+  "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-abc123"},
+  "response": {
+    "data": [
+      {
+        "id": "zc-1001",
+        "accountId": "acc-42",
+        "name": "example.com",
+        "nameUnicode": "example.com",
+        "type": "NATIVE",
+        "emailAddress": "hostmaster@example.com",
+        "dnsSecMode": "off",
+        "status": "active",
+        "lastChangeDate": "2026-08-01T10:00:00Z",
+        "soaValues": {"refresh": 3600, "retry": 900, "expire": 604800, "negativeTtl": 3600, "ttl": 86400}
+      },
+      {
+        "id": "zc-1002",
+        "accountId": "acc-42",
+        "name": "xn--beispiel-mnchen-hsb.de",
+        "nameUnicode": "beispiel-münchen.de",
+        "type": "NATIVE",
+        "dnsSecMode": "automatic",
+        "status": "active",
+        "lastChangeDate": "2026-08-02T10:00:00Z"
+      }
+    ],
+    "limit": 100,
+    "page": 1,
+    "totalEntries": 2,
+    "totalPages": 1,
+    "type": "FindZoneConfigsResult"
+  },
+  "status": "success",
+  "warnings": []
+}

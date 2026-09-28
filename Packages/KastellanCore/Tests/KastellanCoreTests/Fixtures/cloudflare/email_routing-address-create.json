@@ -1,0 +1,13 @@
+{
+  "result": {
+    "id": "0c17bd3a1a5c6c5fbb8cac4f3e2d1c00",
+    "tag": "0c17bd3a1a5c6c5fbb8cac4f3e2d1c00",
+    "email": "neu@example.org",
+    "verified": null,
+    "created": "2026-09-06T18:30:00Z",
+    "modified": "2026-09-06T18:30:00Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

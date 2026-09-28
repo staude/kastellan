@@ -1,0 +1,44 @@
+{
+  "result": [
+    {
+      "id": "a7e6fb77503c41d8a7f3113c6c4ea0a6",
+      "tag": "a7e6fb77503c41d8a7f3113c6c4ea0a6",
+      "name": "Info an Max",
+      "enabled": true,
+      "priority": 0,
+      "matchers": [{"type": "literal", "field": "to", "value": "info@example.com"}],
+      "actions": [{"type": "forward", "value": ["user@example.com"]}]
+    },
+    {
+      "id": "b8f7ac88614d52e9b8a4224d7d5fb1b7",
+      "tag": "b8f7ac88614d52e9b8a4224d7d5fb1b7",
+      "name": "Alt, abgeschaltet",
+      "enabled": false,
+      "priority": 1,
+      "matchers": [{"type": "literal", "field": "to", "value": "alt@example.com"}],
+      "actions": [{"type": "forward", "value": ["user@example.com", "old@example.net"]}]
+    },
+    {
+      "id": "c9a8bd99725e63fac9b5335e8e6ac2c8",
+      "tag": "c9a8bd99725e63fac9b5335e8e6ac2c8",
+      "name": "Spam wegwerfen",
+      "enabled": true,
+      "priority": 2,
+      "matchers": [{"type": "literal", "field": "to", "value": "spam@example.com"}],
+      "actions": [{"type": "drop"}]
+    },
+    {
+      "id": "d0b9ce00836f74abd0c6446f9f7bd3d9",
+      "tag": "d0b9ce00836f74abd0c6446f9f7bd3d9",
+      "name": "Neu, Ziel unbestätigt",
+      "enabled": true,
+      "priority": 3,
+      "matchers": [{"type": "literal", "field": "to", "value": "neu@example.com"}],
+      "actions": [{"type": "forward", "value": ["old@example.net"]}]
+    }
+  ],
+  "result_info": {"page": 1, "per_page": 100, "total_pages": 1, "count": 4, "total_count": 4},
+  "success": true,
+  "errors": [],
+  "messages": []
+}

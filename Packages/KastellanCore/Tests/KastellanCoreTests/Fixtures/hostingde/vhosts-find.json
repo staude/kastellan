@@ -1,0 +1,22 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-vh001"},
+  "response": {
+    "data": [
+      {"id": "vh-1", "accountId": "acc-42", "webspaceId": "ws-1", "domainName": "example.com", "domainNameUnicode": "example.com", "enableAlias": true, "enableSystemAlias": false,
+       "serverType": "nginx", "phpVersion": "8.3", "webRoot": "example.com", "status": "active", "redirectToPrimaryName": false, "sslSettings": null,
+       "locations": [{"locationType": "generic", "matchType": "default", "matchString": "", "phpEnabled": true, "directoryListingEnabled": false, "redirectionStatus": "", "redirectionUrl": ""}],
+       "addDate": "2026-01-01T00:00:00Z", "lastChangeDate": "2026-01-01T00:00:00Z", "systemAlias": "vh-1.wh.hosting.zone"},
+      {"id": "vh-2", "accountId": "acc-42", "webspaceId": "ws-1", "domainName": "app.example.com", "domainNameUnicode": "app.example.com", "enableAlias": false, "enableSystemAlias": false,
+       "serverType": "nginx", "phpVersion": "8.3", "webRoot": "app", "status": "active", "redirectToPrimaryName": false, "sslSettings": null,
+       "locations": [{"locationType": "generic", "matchType": "default", "matchString": "", "phpEnabled": true, "directoryListingEnabled": false, "redirectionStatus": "", "redirectionUrl": ""}],
+       "addDate": "2026-02-01T00:00:00Z", "lastChangeDate": "2026-02-01T00:00:00Z", "systemAlias": "vh-2.wh.hosting.zone"},
+      {"id": "vh-3", "accountId": "acc-42", "webspaceId": "ws-1", "domainName": "alt.example.com", "domainNameUnicode": "alt.example.com", "enableAlias": false, "enableSystemAlias": false,
+       "serverType": "apache", "phpVersion": "8.2", "webRoot": "alt", "status": "active", "redirectToPrimaryName": false, "sslSettings": null,
+       "locations": [{"locationType": "generic", "matchType": "default", "matchString": "", "phpEnabled": false, "directoryListingEnabled": false, "redirectionStatus": "", "redirectionUrl": ""},
+                     {"locationType": "redirect", "matchType": "directory", "matchString": "/", "redirectionStatus": "301", "redirectionUrl": "https://example.com/"}],
+       "addDate": "2026-03-01T00:00:00Z", "lastChangeDate": "2026-03-01T00:00:00Z", "systemAlias": "vh-3.wh.hosting.zone"}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 3, "totalPages": 1, "type": "FindVHostsResult"
+  },
+  "status": "success", "warnings": []
+}

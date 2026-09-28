@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "always_use_https",
+    "value": "off",
+    "editable": true,
+    "modified_on": null
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

@@ -1,0 +1,28 @@
+{
+  "errors": [], "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-mb001"},
+  "response": {
+    "data": [
+      {"id": "mb-1", "accountId": "acc-42", "bundleId": "", "emailAddress": "user1@example.com", "emailAddressUnicode": "user1@example.com", "domainName": "example.com", "domainNameUnicode": "example.com",
+       "status": "active", "type": "ImapMailbox", "productCode": "email-imap-mailbox-12m", "forwarderTargets": ["user2@example.net"], "smtpForwarderTarget": "", "isAdmin": false,
+       "storageQuota": 2048, "storageQuotaUsed": 120,
+       "spamFilter": {"bannedFilesChecks": true, "deleteSpam": false, "headerChecks": true, "malwareChecks": true, "modifySubjectOnSpam": true, "spamChecks": true, "spamLevel": "medium", "useGreylisting": true},
+       "autoResponder": {"subject": "Abwesend", "body": "Bin bis Montag nicht da.", "start": "2026-09-01T00:00:00Z", "end": "2026-09-14T00:00:00Z", "active": true, "enabled": true},
+       "paidUntil": "2027-01-01T00:00:00Z", "renewOn": "2026-12-31T00:00:00Z", "deletionScheduledFor": null, "restorableUntil": null, "addDate": "2026-01-01T00:00:00Z", "lastChangeDate": "2026-09-01T00:00:00Z"},
+      {"id": "mb-2", "accountId": "acc-42", "bundleId": "", "emailAddress": "user3@example.com", "emailAddressUnicode": "user3@example.com", "domainName": "example.com", "domainNameUnicode": "example.com",
+       "status": "active", "type": "ImapMailbox", "productCode": "email-imap-mailbox-12m", "forwarderTargets": [], "smtpForwarderTarget": "", "isAdmin": true,
+       "storageQuota": 1024, "storageQuotaUsed": 0,
+       "spamFilter": {"bannedFilesChecks": false, "deleteSpam": false, "headerChecks": false, "malwareChecks": false, "modifySubjectOnSpam": true, "spamChecks": false, "spamLevel": "low", "useGreylisting": false},
+       "paidUntil": "2027-01-01T00:00:00Z", "renewOn": "2026-12-31T00:00:00Z", "deletionScheduledFor": null, "restorableUntil": null, "addDate": "2026-02-01T00:00:00Z", "lastChangeDate": "2026-02-01T00:00:00Z"},
+      {"id": "fw-1", "accountId": "acc-42", "bundleId": "", "emailAddress": "info@example.com", "emailAddressUnicode": "info@example.com", "domainName": "example.com", "domainNameUnicode": "example.com",
+       "status": "active", "type": "Forwarder", "forwarderType": "externalForwarder", "productCode": "email-forwarder-external-12m", "forwarderTargets": ["user1@example.com", "user4@example.net"],
+       "spamFilter": {"spamChecks": false, "spamLevel": "low"}, "paidUntil": "2027-01-01T00:00:00Z", "renewOn": "2026-12-31T00:00:00Z", "deletionScheduledFor": null, "restorableUntil": null},
+      {"id": "ca-1", "accountId": "acc-42", "bundleId": "", "emailAddress": "*@example.com", "emailAddressUnicode": "*@example.com", "domainName": "example.com", "domainNameUnicode": "example.com",
+       "status": "active", "type": "Catchall", "productCode": "email-catchall-12m", "forwarderTarget": "user1@example.com", "spamFilter": {"spamChecks": false, "spamLevel": "low"}},
+      {"id": "ml-1", "accountId": "acc-42", "bundleId": "", "emailAddress": "team@example.com", "emailAddressUnicode": "team@example.com", "domainName": "example.com", "domainNameUnicode": "example.com",
+       "status": "active", "type": "MailingList", "productCode": "email-mailinglist-team-v1-12m", "name": "Team", "accessMode": "owners", "replyToMode": "list",
+       "owners": ["user3@example.com"], "members": ["user1@example.com", "user5@example.org"], "spamFilter": {"spamChecks": false, "spamLevel": "low"}}
+    ],
+    "limit": 100, "page": 1, "totalEntries": 5, "totalPages": 1, "type": "FindMailboxesResult"
+  },
+  "status": "success", "warnings": []
+}

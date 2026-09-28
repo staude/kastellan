@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {"code": 10001, "contextObject": "", "contextPath": "", "details": [], "text": "The authToken is invalid or has expired.", "value": ""}
+  ],
+  "metadata": {"clientTransactionId": "", "serverTransactionId": "20260908-err001"},
+  "response": null,
+  "status": "error",
+  "warnings": []
+}

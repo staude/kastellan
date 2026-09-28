@@ -1,0 +1,31 @@
+{
+  "server": {
+    "id": 42,
+    "name": "web-01",
+    "status": "running",
+    "created": "2025-08-15T08:30:00Z",
+    "public_net": {
+      "ipv4": {"id": 4711, "ip": "203.0.113.42", "blocked": false, "dns_ptr": "web-01.example.com"},
+      "ipv6": {"id": 4712, "ip": "2001:db8:42::/64", "blocked": false, "dns_ptr": []},
+      "floating_ips": [],
+      "firewalls": [{"id": 38, "status": "applied"}]
+    },
+    "private_net": [],
+    "server_type": {"id": 22, "name": "cpx22", "description": "CPX22", "cores": 2, "memory": 4, "disk": 80, "cpu_type": "shared", "architecture": "x86"},
+    "location": {"id": 1, "name": "fsn1", "description": "Falkenstein DC Park 1", "country": "DE", "city": "Falkenstein", "network_zone": "eu-central"},
+    "image": {"id": 114690389, "type": "system", "status": "available", "name": "ubuntu-24.04", "description": "Ubuntu 24.04", "os_flavor": "ubuntu", "os_version": "24.04", "architecture": "x86"},
+    "iso": null,
+    "rescue_enabled": false,
+    "locked": false,
+    "backup_window": "22-02",
+    "outgoing_traffic": 123456,
+    "ingoing_traffic": 123456,
+    "included_traffic": 21990232555520,
+    "protection": {"delete": true, "rebuild": true},
+    "labels": {"role": "web", "env": "prod"},
+    "volumes": [],
+    "load_balancers": [],
+    "primary_disk_size": 80,
+    "placement_group": null
+  }
+}

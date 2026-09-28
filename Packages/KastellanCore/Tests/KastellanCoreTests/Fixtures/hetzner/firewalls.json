@@ -1,0 +1,73 @@
+{
+  "firewalls": [
+    {
+      "id": 38,
+      "name": "web-ingress",
+      "labels": {"env": "prod"},
+      "created": "2025-08-10T07:00:00Z",
+      "rules": [
+        {
+          "direction": "in",
+          "protocol": "tcp",
+          "port": "22",
+          "source_ips": ["198.51.100.0/24", "2001:db8:ff00:42::/64"],
+          "destination_ips": [],
+          "description": "SSH aus dem Büro"
+        },
+        {
+          "direction": "in",
+          "protocol": "tcp",
+          "port": "80-443",
+          "source_ips": ["0.0.0.0/0", "::/0"],
+          "destination_ips": [],
+          "description": null
+        },
+        {
+          "direction": "in",
+          "protocol": "icmp",
+          "port": null,
+          "source_ips": ["0.0.0.0/0", "::/0"],
+          "destination_ips": [],
+          "description": "Ping"
+        },
+        {
+          "direction": "out",
+          "protocol": "udp",
+          "port": "53",
+          "source_ips": [],
+          "destination_ips": ["0.0.0.0/0", "::/0"],
+          "description": "DNS"
+        }
+      ],
+      "applied_to": [
+        {"type": "server", "server": {"id": 42}},
+        {
+          "type": "label_selector",
+          "label_selector": {"selector": "env=prod"},
+          "applied_to_resources": [
+            {"type": "server", "server": {"id": 42}},
+            {"type": "server", "server": {"id": 45}}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "name": "empty",
+      "labels": {},
+      "created": "2025-08-11T07:00:00Z",
+      "rules": [],
+      "applied_to": []
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "per_page": 50,
+      "previous_page": null,
+      "next_page": null,
+      "last_page": 1,
+      "total_entries": 2
+    }
+  }
+}
