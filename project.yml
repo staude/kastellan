@@ -11,8 +11,8 @@ settings:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: "7N2W4T6UPV"
     CODE_SIGN_STYLE: Automatic
-    MARKETING_VERSION: "0.1.0"
-    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "0.2.0"
+    CURRENT_PROJECT_VERSION: "2"
     SWIFT_STRICT_CONCURRENCY: complete
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     GENERATE_INFOPLIST_FILE: NO
@@ -22,6 +22,9 @@ packages:
   MCP:
     url: https://github.com/modelcontextprotocol/swift-sdk
     from: "0.11.0"
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: "2.9.2"
 targets:
   kastellan-mcp:
     type: tool
@@ -47,6 +50,8 @@ targets:
           - "**/.DS_Store"
     dependencies:
       - package: KastellanCore
+      - package: Sparkle
+        product: Sparkle
       - target: kastellan-mcp
         embed: true
         codeSign: true

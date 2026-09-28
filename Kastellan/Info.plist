@@ -26,5 +26,15 @@
 	<string>© 2026 Frank Neumann-Staude</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/staude/kastellan/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>UyWX+AAebXEMgDVlZlZCfWVOmx9UCdKDtbYQEx+F9+w=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 </dict>
 </plist>

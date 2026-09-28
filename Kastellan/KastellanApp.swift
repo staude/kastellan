@@ -36,6 +36,7 @@ struct KastellanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @State private var model = AppModel()
     @State private var settings = AppSettings()
+    @State private var updater = UpdaterController.shared
 
     var body: some Scene {
         // Die WindowGroup muss die erste Szene sein: SwiftUI öffnet beim Start nur die erste Fensterszene.
@@ -49,6 +50,10 @@ struct KastellanApp: App {
         }
         .defaultSize(width: 900, height: 600)
         .commands {
+            CommandGroup(after: .appInfo) {
+                Button("Nach Updates suchen …") { updater.checkForUpdates() }
+                    .disabled(!updater.isAvailable)
+            }
             CommandMenu("Darstellung") {
                 Button("Schrift größer") { settings.increaseText() }
                     .keyboardShortcut("+", modifiers: .command)

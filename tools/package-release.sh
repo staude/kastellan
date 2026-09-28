@@ -1,14 +1,15 @@
 #!/bin/bash
 #
 # Baut Kastellan zur Weitergabe: Archiv, Export mit Developer ID (von Xcode über das angemeldete
-# Entwicklerkonto signiert), Notarisierung, Stapling, dann ZIP, DMG und Prüfsummen.
+# Entwicklerkonto signiert), Notarisierung, Stapling, dann ZIP, DMG, Prüfsummen und den Sparkle-Feed
+# appcast.xml (DMG signiert mit dem Ed25519-Schlüssel „kastellan“ aus dem Schlüsselbund).
 #
 #   tools/package-release.sh                          # notarisiert über das Xcode-Konto
 #   NOTARY_PROFILE=kastellan-notary tools/package-release.sh   # notarisiert über notarytool-Profil
 #   SKIP_NOTARIZE=1 tools/package-release.sh          # nur signieren (Empfänger: Rechtsklick → Öffnen)
 #
 # Voraussetzung: in Xcode angemeldetes Konto des Teams aus project.yml mit Recht auf Developer-ID-
-# Zertifikate. Ein notarytool-Profil legt man einmalig an mit
+# Zertifikate, und der Sparkle-Schlüssel im Schlüsselbund (einmalig: generate_keys --account kastellan). Ein notarytool-Profil legt man einmalig an mit
 #   xcrun notarytool store-credentials kastellan-notary --apple-id <apple-id> --team-id <team>
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -17,6 +18,7 @@ VERSION=$(sed -n 's/^ *MARKETING_VERSION: *"\([^"]*\)".*/\1/p' project.yml | hea
 BUILD=$(sed -n 's/^ *CURRENT_PROJECT_VERSION: *"\([^"]*\)".*/\1/p' project.yml | head -1)
 TEAM=$(sed -n 's/^ *DEVELOPMENT_TEAM: *"\([^"]*\)".*/\1/p' project.yml | head -1)
 WORK="build/archive"
+DD="build/DerivedData"
 ARCHIVE="$WORK/Kastellan.xcarchive"
 OUT="build/release/Kastellan-$VERSION"
 LOGS=$(mktemp -d)
@@ -29,7 +31,7 @@ rm -rf "$WORK" "$OUT"; mkdir -p "$WORK" "$OUT"
 
 echo "==> Archiv (Release)"
 xcodebuild -project Kastellan.xcodeproj -scheme Kastellan -configuration Release -destination 'generic/platform=macOS' \
-  -archivePath "$ARCHIVE" -skipPackagePluginValidation -allowProvisioningUpdates archive > "$LOGS/archive.log" 2>&1 || true
+  -archivePath "$ARCHIVE" -derivedDataPath "$DD" -skipPackagePluginValidation -allowProvisioningUpdates archive > "$LOGS/archive.log" 2>&1 || true
 filter "$LOGS/archive.log" "error:|ARCHIVE (SUCCEEDED|FAILED)"
 grep -q "ARCHIVE SUCCEEDED" "$LOGS/archive.log" || { echo "Archiv fehlgeschlagen (Log: $LOGS/archive.log)"; exit 1; }
 
@@ -113,5 +115,20 @@ ln -s /Applications "$STAGE/Programme"
 hdiutil create -volname "Kastellan $VERSION" -srcfolder "$STAGE" -ov -format UDZO -quiet "$DMG"
 rm -rf "$STAGE"
 
+echo "==> Sparkle-Feed"
+SIGN_UPDATE=$(find "$DD/SourcePackages/artifacts" -path '*/old_dsa_scripts' -prune -o -type f -name sign_update -print 2>/dev/null | head -1)
+[ -x "$SIGN_UPDATE" ] || { echo "sign_update von Sparkle nicht gefunden"; exit 1; }
+SIG_LINE=$("$SIGN_UPDATE" --account kastellan "$DMG")
+ED_SIG=$(printf '%s' "$SIG_LINE" | sed -nE 's/.*sparkle:edSignature="([^"]+)".*/\1/p')
+LENGTH=$(printf '%s' "$SIG_LINE" | sed -nE 's/.*length="([0-9]+)".*/\1/p')
+[ -n "$ED_SIG" ] && [ -n "$LENGTH" ] || { echo "sign_update-Ausgabe nicht lesbar: $SIG_LINE"; exit 1; }
+NOTES=$(awk -v v="$VERSION" '$0 ~ "^## \\[" v "\\]" {f=1; next} f && /^## \[/ {exit} f' CHANGELOG.md)
+OUTPUT_PATH="build/release/appcast.xml" VERSION="$VERSION" BUILD="$BUILD" \
+  DMG_URL="https://github.com/staude/kastellan/releases/download/v$VERSION/Kastellan-$VERSION.dmg" \
+  DMG_LENGTH="$LENGTH" DMG_ED_SIGNATURE="$ED_SIG" PUB_DATE="$(LC_ALL=C date -u '+%a, %d %b %Y %H:%M:%S +0000')" \
+  NOTES_MD="$NOTES" NOTES_URL="https://github.com/staude/kastellan/releases/tag/v$VERSION" \
+  python3 tools/appcast.py
+echo "    build/release/appcast.xml"
+
 (cd build/release && shasum -a 256 "Kastellan-$VERSION.zip" "Kastellan-$VERSION.dmg" | tee "Kastellan-$VERSION.sha256")
-echo "Fertig: $DMG, $ZIP (notarisiert: $([ $NOTARIZED = 1 ] && echo ja || echo nein))"
+echo "Fertig: $DMG, $ZIP, build/release/appcast.xml (notarisiert: $([ $NOTARIZED = 1 ] && echo ja || echo nein))"
