@@ -8,6 +8,7 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ### Added
 
+- Namecheap-Adapter (Anfang): Client für die XML-API mit API-Key, API-Benutzer und Client-IP, Formular-POST, Fehlerübersetzung mit klaren Hinweisen zu IP-Freigabe, Key und fremden Nameservern, Pagination, Drosselung auf 50 Aufrufe pro Minute, 700 pro Stunde und 8000 pro Tag, Sandbox-Schalter. Verbindung in der App anlegbar, Health-Check zählt die Domains.
 - `tools/namecheap-probe.py` liest Domains, DNS, Weiterleitungen und Zertifikate über die Namecheap-API nur lesend und legt anonymisierte XML-Fixtures für den kommenden Namecheap-Adapter ab. Mit `--rescrub` lassen sich vorhandene Fixtures ohne API-Aufruf erneut bereinigen.
 
 ## [0.2.0] - 2026-09-28
