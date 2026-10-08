@@ -194,6 +194,7 @@ struct ConnectionEditor: View {
     @State private var secrets: [String: String] = [:]
     @State private var saving = false
     @State private var errorText: String?
+    @State private var detecting = false
 
     init(model: AppModel, profile: KastellanProfile, existing: Connection?) {
         self.model = model
@@ -224,8 +225,24 @@ struct ConnectionEditor: View {
                 TextField("Bezeichnung", text: $label, prompt: Text("z. B. All-Inkl privat"))
                 if let entry {
                     ForEach(entry.settingKeys, id: \.key) { key in
-                        TextField(key.label, text: Binding(get: { settings[key.key] ?? "" }, set: { settings[key.key] = $0 }),
-                                  prompt: Text(key.placeholder.isEmpty ? "optional" : key.placeholder))
+                        if key.detect == .publicIPv4 {
+                            HStack {
+                                TextField(key.label, text: Binding(get: { settings[key.key] ?? "" }, set: { settings[key.key] = $0 }),
+                                          prompt: Text(key.placeholder.isEmpty ? "optional" : key.placeholder))
+                                Button(detecting ? "Ermittle …" : "Ermitteln") { detectPublicIP(into: key.key) }
+                                    .disabled(detecting)
+                                    .help("Fragt einmalig https://1.1.1.1/cdn-cgi/trace nach der öffentlichen IPv4 dieses Macs")
+                                Button {
+                                    NSPasteboard.general.clearContents()
+                                    NSPasteboard.general.setString(settings[key.key] ?? "", forType: .string)
+                                } label: { Image(systemName: "doc.on.doc") }
+                                    .disabled((settings[key.key] ?? "").isEmpty)
+                                    .help("IP kopieren, etwa für die Freigabeliste im Namecheap-Panel")
+                            }
+                        } else {
+                            TextField(key.label, text: Binding(get: { settings[key.key] ?? "" }, set: { settings[key.key] = $0 }),
+                                      prompt: Text(key.placeholder.isEmpty ? "optional" : key.placeholder))
+                        }
                     }
                     ForEach(entry.secretKeys, id: \.key) { key in
                         SecureField(key.label, text: Binding(get: { secrets[key.key] ?? "" }, set: { secrets[key.key] = $0 }),
@@ -251,6 +268,19 @@ struct ConnectionEditor: View {
     private var missingSecrets: Bool {
         guard existing == nil, let entry else { return false }
         return entry.secretKeys.contains { (secrets[$0.key] ?? "").isEmpty }
+    }
+
+    private func detectPublicIP(into key: String) {
+        detecting = true
+        errorText = nil
+        Task {
+            do {
+                settings[key] = try await PublicIPv4.detect()
+            } catch {
+                errorText = error.localizedDescription
+            }
+            detecting = false
+        }
     }
 
     private func save() {

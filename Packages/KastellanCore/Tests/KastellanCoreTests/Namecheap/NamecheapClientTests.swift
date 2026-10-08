@@ -52,6 +52,14 @@ struct NamecheapClientTests {
         await #expect(throws: KastellanError.provider("Namecheap a: HTTP 502")) { try await client.call("a") }
     }
 
+    @Test func ipErrorNamesDetectedAddress() async throws {
+        let transport = NamecheapStubTransport([NamecheapFixtures.error("1011150", "Parameter RequestIP is invalid")])
+        let client = NamecheapClient(credentials: { NamecheapFixtures.credentials }, transport: transport, sleep: { _ in }, publicIP: { "203.0.113.7" })
+        await #expect { try await client.call("a") } throws: {
+            if case .unauthorized(let m) = $0 as? KastellanError { m.contains("203.0.113.7") && m.contains("Freigabeliste") } else { false }
+        }
+    }
+
     @Test func listFollowsPaging() async throws {
         let page1 = (0..<100).map { #"<Domain ID="\#($0)" Name="d\#($0).example.com" />"# }.joined()
         let page2 = (100..<130).map { #"<Domain ID="\#($0)" Name="d\#($0).example.com" />"# }.joined()
@@ -106,6 +114,7 @@ struct NamecheapAdapterTests {
         #expect(entry?.displayName == "Namecheap")
         #expect(entry?.secretKeys.map(\.key) == ["api_key"])
         #expect(entry?.settingKeys.map(\.key) == ["api_user", "username", "client_ip", "sandbox"])
+        #expect(entry?.settingKeys.first { $0.key == "client_ip" }?.detect == .publicIPv4)
     }
 
     @Test func healthCheckCountsDomains() async throws {

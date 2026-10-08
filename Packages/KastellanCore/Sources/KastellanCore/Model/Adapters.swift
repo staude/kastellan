@@ -33,12 +33,16 @@ public protocol ProviderAdapter: Sendable {
 }
 
 public struct SettingKey: Hashable, Sendable {
+    /// Wert, den die App auf Knopfdruck selbst ermitteln kann.
+    public enum Detect: String, Hashable, Sendable { case publicIPv4 }
+
     public let key: String
     public let label: String
     public let placeholder: String
+    public let detect: Detect?
 
-    public init(_ key: String, label: String, placeholder: String = "") {
-        self.key = key; self.label = label; self.placeholder = placeholder
+    public init(_ key: String, label: String, placeholder: String = "", detect: Detect? = nil) {
+        self.key = key; self.label = label; self.placeholder = placeholder; self.detect = detect
     }
 }
 

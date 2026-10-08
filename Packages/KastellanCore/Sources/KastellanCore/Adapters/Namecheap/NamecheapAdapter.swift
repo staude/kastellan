@@ -11,7 +11,7 @@ public struct NamecheapAdapter: ProviderAdapter {
     public static let settingKeys = [
         SettingKey("api_user", label: "API-Benutzer", placeholder: "Namecheap-Benutzername"),
         SettingKey("username", label: "Konto", placeholder: "leer = API-Benutzer"),
-        SettingKey("client_ip", label: "Client-IP", placeholder: "öffentliche IPv4, im Panel freigegeben"),
+        SettingKey("client_ip", label: "Client-IP", placeholder: "öffentliche IPv4, im Panel freigegeben", detect: .publicIPv4),
         SettingKey("sandbox", label: "Sandbox", placeholder: "leer = Produktion, ja = api.sandbox.namecheap.com"),
     ]
     public static let secretKeys = [SettingKey("api_key", label: "API-Key", placeholder: "Profile → Tools → Namecheap API Access")]
@@ -45,7 +45,7 @@ public struct NamecheapAdapter: ProviderAdapter {
             }
             return .init(apiUser: setting("api_user"), apiKey: key.trimmingCharacters(in: .whitespacesAndNewlines),
                          userName: setting("username"), clientIP: setting("client_ip"))
-        }, sandbox: Self.isSandbox(settings["sandbox"]))
+        }, sandbox: Self.isSandbox(settings["sandbox"]), publicIP: { try? await PublicIPv4.detect() })
         self.init(connection: connection, client: client)
     }
 
