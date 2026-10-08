@@ -8,6 +8,7 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ### Added
 
+- Hilfe: Abschnitt „Namecheap anbinden“ mit Freischaltung, IP-Freigabe und den Besonderheiten bei DNS und Weiterleitungen. README nennt Namecheap als siebten Anbieter.
 - Namecheap: bei Namecheap gekaufte Zertifikate lesen (Hostname, Typ, Ablauf, Status). Kauf und Aktivierung bleiben im Namecheap-Panel.
 - Namecheap: Mail-Weiterleitungen lesen, anlegen, ändern und löschen, auch mit mehreren Zielen und als Catch-all (`*@domain`). Weiterleitungen greifen bei Namecheap nur, wenn die Domain auf „Email Forwarding“ steht. Steht sie auf MX, zeigt Kastellan die Weiterleitungen als inaktiv und lehnt neue mit Hinweis ab, statt die MX-Records umzustellen.
 - Namecheap: DNS-Records lesen, anlegen, ändern und löschen. Namecheap ersetzt bei jedem Schreiben die ganze Zone; Kastellan liest deshalb vorher, ändert nur die betroffenen Records und schreibt alle anderen unverändert zurück, auch Namecheap-eigene Typen wie URL-Weiterleitungen. Der Mail-Typ der Zone (`EmailType`) geht immer mit, damit MX-Records erhalten bleiben. Record-Kennungen enthalten einen Hash über den Inhalt: Hat jemand den Record inzwischen geändert, lehnt Kastellan die Änderung ab. Zonen erscheinen nur für Domains mit Namecheap-Nameservern.
