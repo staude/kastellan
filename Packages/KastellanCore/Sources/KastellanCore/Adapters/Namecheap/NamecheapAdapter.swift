@@ -17,7 +17,9 @@ public struct NamecheapAdapter: ProviderAdapter {
     public static let secretKeys = [SettingKey("api_key", label: "API-Key", placeholder: "Profile → Tools → Namecheap API Access")]
 
     /// Was der Adapter tatsächlich kann; wächst mit den Ressourcen-Erweiterungen.
-    public static let capabilityMatrix = CapabilityMatrix(provider: providerID, capabilities: [])
+    public static let capabilityMatrix = CapabilityMatrix(provider: providerID, capabilities:
+        CapabilityMatrix.only(.domain, .list, .get, .update)
+    )
 
     public let connection: Connection
     let client: NamecheapClient

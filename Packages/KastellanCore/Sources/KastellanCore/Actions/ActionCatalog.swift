@@ -300,11 +300,15 @@ public enum ActionCatalog {
                 try .encode(try await ActionErrors.needs(a, (any DomainAdapter).self, "domain").createDomain(fqdn: fqdn, path: path, extra: extra))
             }
         },
-        ActionSpec("domain_update", Capability(.domain, .update), de: "Domain-Einstellungen ändern", en: "Update domain settings",
+        ActionSpec("domain_update", Capability(.domain, .update), de: "Domain-Einstellungen ändern. Nameserver-Wechsel (extra.nameservers) braucht eine Freigabe.", en: "Update domain settings. Changing nameservers (extra.nameservers) requires approval.",
                    parameters: [connectionParam, ParameterSpec("fqdn", "Domainname"), ParameterSpec("path", required: false, "Webspace-Pfad"),
                                 ParameterSpec("extra", kind: .object, required: false, "Provider-Spezifisches")]) { input, _ in
             let fqdn = try input.string("fqdn"); let path = input.optionalString("path"); let extra = input.extra()
-            return PreparedAction(target: fqdn, preview: "Domain \(fqdn) ändern") { a in
+            // Nameserver-Wechsel ist eine NS-Änderung und läuft wie MX/NS/SOA immer über eine Freigabe.
+            let nameservers = extra["nameservers"]
+            let preview = nameservers.map { "Nameserver von \(fqdn) ändern auf \($0.arrayValue?.compactMap(\.stringValue).joined(separator: ", ") ?? $0.stringValue ?? "?")" }
+                ?? "Domain \(fqdn) ändern"
+            return PreparedAction(target: fqdn, preview: preview, requiresConfirmation: nameservers != nil) { a in
                 try .encode(try await ActionErrors.needs(a, (any DomainAdapter).self, "domain").updateDomain(fqdn: fqdn, path: path, extra: extra))
             }
         },
