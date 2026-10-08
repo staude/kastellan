@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.dns.getHosts">
+    <DomainDNSGetHostsResult Domain="example29.com" EmailType="MX" IsUsingOurDNS="true">
+      <host HostId="148256627" Name="@" Type="A" Address="192.0.2.10" MXPref="10" TTL="300" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="223484552" Name="webmail" Type="A" Address="192.0.2.10" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="148256648" Name="www" Type="A" Address="192.0.2.10" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="232030211" Name="@" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="232030226" Name="webmail" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="232030213" Name="www" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="148261854" Name="@" Type="MX" Address="example29.com." MXPref="10" TTL="1799" AssociatedAppTitle="MX" FriendlyName="MX1" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="261867418" Name="@" Type="TXT" Address="google-site-verification=TOKEN1" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195395039" Name="_github-challenge-org1.example29.com" Type="TXT" Address="0000000000" MXPref="10" TTL="60" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="194649087" Name="_github-challenge-org1.example29.com" Type="TXT" Address="0000000000" MXPref="10" TTL="60" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+    </DomainDNSGetHostsResult>
+  </CommandResponse>
+  <Server>Server 1360233663</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>1.127</ExecutionTime>
+</ApiResponse>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.dns.getlist</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.dns.getList">
+    <DomainDNSGetListResult Domain="example13.com" IsUsingOurDNS="false" IsPremiumDNS="false" IsUsingFreeDNS="false">
+      <Nameserver>ns1026.example35.com</Nameserver>
+      <Nameserver>ns1026.example.com</Nameserver>
+      <Nameserver>ns1026.example36.com</Nameserver>
+      <Nameserver>ns1026.example37.com</Nameserver>
+    </DomainDNSGetListResult>
+  </CommandResponse>
+  <Server>Server 1360233661</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.229</ExecutionTime>
+</ApiResponse>

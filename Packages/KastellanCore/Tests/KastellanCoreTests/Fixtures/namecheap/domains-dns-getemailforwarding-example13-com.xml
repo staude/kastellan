@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="ERROR">
+  <Errors>
+    <Error Number="2030288">Cannot complete this command as this domain is not using proper DNS servers</Error>
+  </Errors>
+  <Warnings />
+  <RequestedCommand>namecheap.domains.dns.getemailforwarding</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.dns.getEmailForwarding">
+    <DomainDNSGetEmailForwardingResult Domain="" />
+  </CommandResponse>
+  <Server>Server 1360233663</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.016</ExecutionTime>
+</ApiResponse>

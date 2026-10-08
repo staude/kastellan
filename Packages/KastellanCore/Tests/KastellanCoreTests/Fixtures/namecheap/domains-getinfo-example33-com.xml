@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.getInfo">
+    <DomainGetInfoResult Status="Ok" ID="anon10" DomainName="example33.com" OwnerName="anon2" IsOwner="true" IsPremium="false">
+      <DomainDetails>
+        <CreatedDate>05/12/1999</CreatedDate>
+        <ExpiredDate>05/12/2027</ExpiredDate>
+        <NumYears>0</NumYears>
+      </DomainDetails>
+      <LockDetails />
+      <Whoisguard Enabled="True">
+        <ID>anon11</ID>
+        <ExpiredDate>05/12/2027</ExpiredDate>
+        <EmailDetails WhoisGuardEmail="user4@example34.com" ForwardedTo="anon4" LastAutoEmailChangeDate="11/12/2021" AutoEmailChangeFrequencyDays="30" />
+      </Whoisguard>
+      <PremiumDnsSubscription>
+        <UseAutoRenew>false</UseAutoRenew>
+        <SubscriptionId>-1</SubscriptionId>
+        <CreatedDate>0001-01-01T00:00:00</CreatedDate>
+        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>
+        <IsActive>false</IsActive>
+      </PremiumDnsSubscription>
+      <DnsDetails ProviderType="FREE" IsUsingOurDNS="true" HostCount="22" EmailType="MX" DynamicDNSStatus="false" IsFailover="false">
+        <Nameserver>dns1.registrar-servers.com</Nameserver>
+        <Nameserver>dns2.registrar-servers.com</Nameserver>
+      </DnsDetails>
+      <Modificationrights All="true" />
+    </DomainGetInfoResult>
+  </CommandResponse>
+  <Server>Server 1360233663</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.372</ExecutionTime>
+</ApiResponse>
