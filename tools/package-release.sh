@@ -93,7 +93,7 @@ Installation
 1. Kastellan.app in den Ordner Programme ziehen und starten.
 $( [ $NOTARIZED = 1 ] && echo "   Die App ist von Apple notarisiert und startet ohne Warnung." || echo "   Beim ersten Start: Rechtsklick auf Kastellan.app, „Öffnen“ wählen und bestätigen (nicht notarisiert)." )
 2. In der App unter Verbindungen den ersten Hoster anlegen (All-Inkl, Cloudflare, Hetzner,
-   hosting.de, Mittwald, Hostinger). Zugangsdaten landen im Schlüsselbund.
+   hosting.de, Mittwald, Hostinger, Namecheap). Zugangsdaten landen im Schlüsselbund.
 3. Unter MCP-Clients einen Token für Claude Code oder Claude Desktop ausstellen und die
    Konfiguration schreiben lassen. Rechte je Verbindung unter Rechte, Freigaben unter Freigaben.
 
