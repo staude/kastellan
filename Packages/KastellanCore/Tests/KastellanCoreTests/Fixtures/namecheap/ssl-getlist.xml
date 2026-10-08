@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+ <Errors />
+ <Warnings />
+ <RequestedCommand>namecheap.ssl.getList</RequestedCommand>
+ <CommandResponse Type="namecheap.ssl.getList">
+  <SSLListResult />
+  <Paging>
+   <TotalItems>0</TotalItems>
+   <CurrentPage>1</CurrentPage>
+   <PageSize>100</PageSize>
+  </Paging>
+ </CommandResponse>
+ <Server>c82b1dffb0d8</Server>
+ <GMTTimeDifference>--5:00</GMTTimeDifference>
+ <ExecutionTime>0.040</ExecutionTime>
+</ApiResponse>

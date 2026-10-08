@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.getlist</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.getList">
+    <DomainGetListResult>
+      <Domain ID="anon12" Name="example22.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon13" Name="example9.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon14" Name="example27.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon15" Name="example23.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon16" Name="example15.com" User="anon2" Created="05/11/2025" Expires="05/11/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon17" Name="example2.com" User="anon6" Created="09/15/2026" Expires="09/15/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon18" Name="example3.com" User="anon6" Created="11/09/2022" Expires="11/09/2026" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon19" Name="example6.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon1" Name="example13.com" User="anon2" Created="12/16/2014" Expires="12/16/2026" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="false" />
+      <Domain ID="anon20" Name="example25.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon21" Name="example7.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon22" Name="example.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon23" Name="example10.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon24" Name="example32.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon25" Name="example18.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon26" Name="example4.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon27" Name="example12.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon28" Name="example11.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon29" Name="example14.com" User="anon6" Created="06/15/2024" Expires="06/15/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon30" Name="example21.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon31" Name="example8.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon32" Name="example31.com" User="anon6" Created="12/05/2025" Expires="12/05/2026" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon8" Name="example29.com" User="anon2" Created="06/24/2017" Expires="06/24/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon33" Name="example20.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon34" Name="example30.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon35" Name="example5.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon36" Name="example19.com" User="anon6" Created="06/01/2026" Expires="06/01/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon5" Name="example17.com" User="anon6" Created="02/10/2020" Expires="02/10/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon37" Name="example16.com" User="anon6" Created="05/18/2023" Expires="05/18/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="NOTPRESENT" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon38" Name="example28.com" User="anon6" Created="04/06/2022" Expires="04/06/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon39" Name="example26.com" User="anon6" Created="02/10/2020" Expires="02/10/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon10" Name="example33.com" User="anon2" Created="05/12/1999" Expires="05/12/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="true" />
+      <Domain ID="anon40" Name="example24.com" User="anon2" Created="01/05/2015" Expires="01/05/2027" IsExpired="false" IsLocked="false" AutoRenew="true" WhoisGuard="ENABLED" IsPremium="false" IsOurDNS="false" />
+    </DomainGetListResult>
+    <Paging>
+      <TotalItems>33</TotalItems>
+      <CurrentPage>1</CurrentPage>
+      <PageSize>100</PageSize>
+    </Paging>
+  </CommandResponse>
+  <Server>Server 1360233663</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.013</ExecutionTime>
+</ApiResponse>

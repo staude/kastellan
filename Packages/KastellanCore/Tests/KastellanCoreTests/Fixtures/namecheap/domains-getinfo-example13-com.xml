@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.getinfo</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.getInfo">
+    <DomainGetInfoResult Status="Ok" ID="anon1" DomainName="example13.com" OwnerName="anon2" IsOwner="true" IsPremium="false">
+      <DomainDetails>
+        <CreatedDate>12/16/2014</CreatedDate>
+        <ExpiredDate>12/16/2026</ExpiredDate>
+        <NumYears>0</NumYears>
+      </DomainDetails>
+      <LockDetails />
+      <Whoisguard Enabled="True">
+        <ID>anon3</ID>
+        <ExpiredDate>12/16/2026</ExpiredDate>
+        <EmailDetails WhoisGuardEmail="user1@example34.com" ForwardedTo="anon4" LastAutoEmailChangeDate="11/12/2021" AutoEmailChangeFrequencyDays="30" />
+      </Whoisguard>
+      <PremiumDnsSubscription>
+        <UseAutoRenew>false</UseAutoRenew>
+        <SubscriptionId>-1</SubscriptionId>
+        <CreatedDate>0001-01-01T00:00:00</CreatedDate>
+        <ExpirationDate>0001-01-01T00:00:00</ExpirationDate>
+        <IsActive>false</IsActive>
+      </PremiumDnsSubscription>
+      <DnsDetails ProviderType="CUSTOM" IsUsingOurDNS="false" HostCount="0" EmailType="No Email Service" DynamicDNSStatus="false" IsFailover="false">
+        <Nameserver>ns1026.example35.com</Nameserver>
+        <Nameserver>ns1026.example.com</Nameserver>
+        <Nameserver>ns1026.example36.com</Nameserver>
+        <Nameserver>ns1026.example37.com</Nameserver>
+      </DnsDetails>
+      <Modificationrights All="true" />
+    </DomainGetInfoResult>
+  </CommandResponse>
+  <Server>Server 1360233664</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.823</ExecutionTime>
+</ApiResponse>

@@ -6,6 +6,10 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ## [Unreleased]
 
+### Added
+
+- `tools/namecheap-probe.py` liest Domains, DNS, Weiterleitungen und Zertifikate über die Namecheap-API nur lesend und legt anonymisierte XML-Fixtures für den kommenden Namecheap-Adapter ab. Mit `--rescrub` lassen sich vorhandene Fixtures ohne API-Aufruf erneut bereinigen.
+
 ## [0.2.0] - 2026-09-28
 
 ### Added

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApiResponse xmlns="http://api.namecheap.com/xml.response" Status="OK">
+  <Errors />
+  <Warnings />
+  <RequestedCommand>namecheap.domains.dns.gethosts</RequestedCommand>
+  <CommandResponse Type="namecheap.domains.dns.getHosts">
+    <DomainDNSGetHostsResult Domain="example33.com" EmailType="MX" IsUsingOurDNS="true">
+      <host HostId="183668496" Name="*" Type="A" Address="192.0.2.10" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="493097827" Name="example38.com" Type="A" Address="192.0.2.11" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="138181981" Name="@" Type="A" Address="192.0.2.10" MXPref="10" TTL="300" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="424390794" Name="host1" Type="A" Address="192.0.2.12" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="491785492" Name="host2" Type="A" Address="192.0.2.13" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="497778751" Name="host3" Type="A" Address="192.0.2.14" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="138182261" Name="www" Type="A" Address="192.0.2.10" MXPref="10" TTL="300" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="248676627" Name="@" Type="TXT" Address="google-site-verification=TOKEN2" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316136" Name="@" Type="TXT" Address="v=spf1 include:spf.protection.example39.com -all" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316077" Name="sip" Type="CNAME" Address="sipdir.online.example40.com." MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316101" Name="lyncdiscover" Type="CNAME" Address="webdir.online.example40.com." MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316120" Name="enterpriseregistration" Type="CNAME" Address="enterpriseregistration.example41.com." MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316129" Name="enterpriseenrollment" Type="CNAME" Address="enterpriseenrollment.manage.example42.com." MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195316051" Name="autodiscover" Type="CNAME" Address="autodiscover.example39.com." MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="231979564" Name="www" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="231979529" Name="@" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="221088879" Name="*" Type="AAAA" Address="2001:db8::a" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195311825" Name="@" Type="TXT" Address="MS=ms10000002" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="195313744" Name="@" Type="MX" Address="example-com.mail.protection.example39.com." MXPref="10" TTL="1799" AssociatedAppTitle="MX" FriendlyName="MX1" IsActive="true" IsDDNSEnabled="false" />
+      <host HostId="287963726" Name="@" Type="TXT" Address="google-site-verification=TOKEN3" MXPref="10" TTL="1799" AssociatedAppTitle="" FriendlyName="" IsActive="true" IsDDNSEnabled="false" />
+    </DomainDNSGetHostsResult>
+  </CommandResponse>
+  <Server>Server 1360233663</Server>
+  <GMTTimeDifference>--4:00</GMTTimeDifference>
+  <ExecutionTime>0.41</ExecutionTime>
+</ApiResponse>
