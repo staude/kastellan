@@ -38,6 +38,8 @@ public actor NamecheapClient {
     private let transport: any NamecheapTransport
     private let sleep: Sleep
     private let now: @Sendable () -> Date
+    /// Ermittelt bei Fehler 1011150 die öffentliche IPv4 für die Meldung; nil schaltet das ab.
+    private let publicIP: (@Sendable () async -> String?)?
 
     private var sent: [Date] = []
     private var busy = false
@@ -49,8 +51,10 @@ public actor NamecheapClient {
                 sandbox: Bool = false,
                 transport: any NamecheapTransport = URLSessionNamecheapTransport(),
                 sleep: @escaping Sleep = { try await Task.sleep(for: $0) },
-                now: @escaping @Sendable () -> Date = { Date() }) {
+                now: @escaping @Sendable () -> Date = { Date() },
+                publicIP: (@Sendable () async -> String?)? = nil) {
         self.credentials = credentials
+        self.publicIP = publicIP
         self.endpoint = sandbox ? Self.sandboxURL : Self.productionURL
         self.transport = transport
         self.sleep = sleep
@@ -83,7 +87,11 @@ public actor NamecheapClient {
         if root["Status"]?.uppercased() != "OK" {
             let errors = root.child("Errors")?.children("Error") ?? []
             guard let first = errors.first else { throw KastellanError.provider("Namecheap \(command): Status \(root["Status"] ?? "?") ohne Fehlertext") }
-            throw Self.error(number: first["Number"] ?? "", text: first.text, command: command)
+            let number = first["Number"] ?? ""
+            if number == "1011150", let publicIP, let ip = await publicIP() {
+                throw KastellanError.unauthorized("Namecheap: Die öffentliche IPv4 dieses Macs ist \(ip) und steht nicht auf der Freigabeliste. Im Namecheap-Panel unter Profile → Tools → Namecheap API Access eintragen. \(first.text) (\(number))")
+            }
+            throw Self.error(number: number, text: first.text, command: command)
         }
         guard let commandResponse = root.child("CommandResponse") else {
             throw KastellanError.provider("Namecheap \(command): Antwort ohne CommandResponse")

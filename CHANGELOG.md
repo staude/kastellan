@@ -8,6 +8,7 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ### Added
 
+- Namecheap: Knopf „Ermitteln“ neben der Client-IP im Verbindungs-Editor fragt einmalig die öffentliche IPv4 dieses Macs ab (über 1.1.1.1, liefert immer die IPv4), mit Kopier-Knopf für die Freigabeliste im Namecheap-Panel. Ist die IP nicht freigegeben, nennt die Fehlermeldung die ermittelte Adresse.
 - Hilfe: Abschnitt „Namecheap anbinden“ mit Freischaltung, IP-Freigabe und den Besonderheiten bei DNS und Weiterleitungen. README nennt Namecheap als siebten Anbieter.
 - Namecheap: bei Namecheap gekaufte Zertifikate lesen (Hostname, Typ, Ablauf, Status). Kauf und Aktivierung bleiben im Namecheap-Panel.
 - Namecheap: Mail-Weiterleitungen lesen, anlegen, ändern und löschen, auch mit mehreren Zielen und als Catch-all (`*@domain`). Weiterleitungen greifen bei Namecheap nur, wenn die Domain auf „Email Forwarding“ steht. Steht sie auf MX, zeigt Kastellan die Weiterleitungen als inaktiv und lehnt neue mit Hinweis ab, statt die MX-Records umzustellen.
