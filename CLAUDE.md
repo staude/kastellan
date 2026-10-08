@@ -22,7 +22,7 @@ macOS-Menüleisten-App mit eingebettetem MCP-Server, die Hosting-APIs (All-Inkl 
 - **Effektives Recht = Policy ∩ Capability ∩ Scope.** Die Prüfung sitzt im Core, nicht im Tool und nicht im Adapter.
 - **Destruktives läuft über Pending Actions.** Löschen, MX/NS/SOA ändern, Domain entfernen, Subaccounts: `prepare_*` erzeugt eine Datei in `pending/`, die App gibt frei und führt aus. Die feste Liste steht im Core, Policies können sie erweitern, nicht verkürzen.
 - **Alles ins Audit.** Jeder Tool-Aufruf schreibt eine Zeile nach `audit.jsonl`: Client, Verbindung, `resource:action`, Ziel, Ergebnis, Provider-Aufruf ohne Secrets, Dauer.
-- **Rate-Limits im Adapter.** All-Inkl `KasFloodDelay` je Antwort, Cloudflare 1200 je 5 Minuten pro User, Hostinger 90 pro Minute. Aufrufe pro Verbindung seriell.
+- **Rate-Limits im Adapter.** All-Inkl `KasFloodDelay` je Antwort, Cloudflare 1200 je 5 Minuten pro User, Hostinger 90 pro Minute, Namecheap 50 pro Minute, 700 pro Stunde, 8000 pro Tag. Aufrufe pro Verbindung seriell.
 - **Swift 6, strikte Concurrency, async/await, `@Observable`.** Keine Callbacks, kein Combine im neuen Code.
 - **SOAP für KAS von Hand.** Eine Operation `KasApi(Params)` mit JSON-String im Envelope, Antwort per `XMLParser`. Keine SOAP-Bibliothek.
 

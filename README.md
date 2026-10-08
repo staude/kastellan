@@ -14,6 +14,7 @@ Vorbild ist [TorroMail](https://github.com/mahype/TorroMail), übertragen von Ma
 | hosting.de | API-Key | DNS, Domains, Mail, Webspace-Nutzer, Datenbanken, Cronjobs, Verzeichnisschutz, Zertifikate, Server |
 | Mittwald (mStudio) | API-Token | Server, Domains, Ingress, DNS, Mail, MySQL, SSH/SFTP, Cronjobs, Zertifikate, Einladungen |
 | Hostinger | API-Token | Domains, DNS mit Probelauf, VPS, Firewalls, Mail, Webhosting-Datenbanken und Cronjobs |
+| Namecheap | API-Key, freigegebene IPv4 | Domains mit Nameservern, Lock und Privacy, DNS als ganze Zone, Mail-Weiterleitungen, Zertifikate lesend |
 
 Welche Aktionen ein Anbieter tatsächlich kann, zeigt die App je Verbindung an. Was ein Anbieter nicht per API anbietet, bietet Kastellan dort auch nicht an.
 
