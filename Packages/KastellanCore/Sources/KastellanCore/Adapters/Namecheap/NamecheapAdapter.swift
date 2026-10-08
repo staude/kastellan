@@ -22,6 +22,7 @@ public struct NamecheapAdapter: ProviderAdapter {
             .union(CapabilityMatrix.only(.dnsZone, .list))
             .union(CapabilityMatrix.only(.dnsRecord, .list, .create, .update, .delete))
             .union(CapabilityMatrix.only(.mailForward, .list, .create, .update, .delete))
+            .union(CapabilityMatrix.only(.certificate, .list))
     )
 
     public let connection: Connection
