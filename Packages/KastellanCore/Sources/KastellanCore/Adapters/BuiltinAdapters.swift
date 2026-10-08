@@ -8,7 +8,7 @@ public enum BuiltinAdapters {
         return r
     }
 
-    /// Neue Adapter hier eintragen (Phase 1: All-Inkl KAS, Phase 2: Cloudflare, Hetzner, Phase 3b: hosting.de, Phase 3c: Mittwald, Phase 3d: Hostinger).
+    /// Neue Adapter hier eintragen (Phase 1: All-Inkl KAS, Phase 2: Cloudflare, Hetzner, Phase 3b: hosting.de, Phase 3c: Mittwald, Phase 3d: Hostinger, danach Namecheap).
     static func register(into registry: inout AdapterRegistry) {
         registry.register(KASAdapter.self)
         registry.register(CloudflareAdapter.self)
@@ -16,5 +16,6 @@ public enum BuiltinAdapters {
         registry.register(HostingDeAdapter.self)
         registry.register(MittwaldAdapter.self)
         registry.register(HostingerAdapter.self)
+        registry.register(NamecheapAdapter.self)
     }
 }

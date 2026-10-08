@@ -131,6 +131,7 @@ struct ConnectionCard: View {
         case "hostingde": "globe.europe.africa"
         case "mittwald": "shippingbox"
         case "hostinger": "h.square"
+        case "namecheap": "n.square"
         default: "envelope"
         }
     }
