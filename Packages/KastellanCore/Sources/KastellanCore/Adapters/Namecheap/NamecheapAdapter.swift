@@ -19,6 +19,8 @@ public struct NamecheapAdapter: ProviderAdapter {
     /// Was der Adapter tatsächlich kann; wächst mit den Ressourcen-Erweiterungen.
     public static let capabilityMatrix = CapabilityMatrix(provider: providerID, capabilities:
         CapabilityMatrix.only(.domain, .list, .get, .update)
+            .union(CapabilityMatrix.only(.dnsZone, .list))
+            .union(CapabilityMatrix.only(.dnsRecord, .list, .create, .update, .delete))
     )
 
     public let connection: Connection
