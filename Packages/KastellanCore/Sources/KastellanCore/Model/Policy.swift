@@ -1,7 +1,7 @@
 /// Gemeinsamer Kern von Kastellan.app und kastellan-mcp.
 /// Kennt weder UI noch MCP-SDK. Siehe Vault, `02 Projekte/Kastellan — Konzept.md`.
 public enum KastellanCore {
-    public static let version = "0.1.0"
+    public static let version = "0.3.0"
 }
 
 /// Kanonische Ressourcentypen (Konzept, Abschnitt 6).

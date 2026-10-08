@@ -6,20 +6,27 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-09
+
+Namecheap ist der siebte Anbieter. Kastellan liest Domains, ändert DNS, Mail-Weiterleitungen und Domain-Einstellungen und liest Zertifikate. Nameserver-Wechsel brauchen ab dieser Version bei allen Anbietern eine Freigabe.
+
 ### Added
 
-- Namecheap: Knopf „Ermitteln“ neben der Client-IP im Verbindungs-Editor fragt einmalig die öffentliche IPv4 dieses Macs ab (über 1.1.1.1, liefert immer die IPv4), mit Kopier-Knopf für die Freigabeliste im Namecheap-Panel. Ist die IP nicht freigegeben, nennt die Fehlermeldung die ermittelte Adresse.
-- Hilfe: Abschnitt „Namecheap anbinden“ mit Freischaltung, IP-Freigabe und den Besonderheiten bei DNS und Weiterleitungen. README nennt Namecheap als siebten Anbieter.
-- Namecheap: bei Namecheap gekaufte Zertifikate lesen (Hostname, Typ, Ablauf, Status). Kauf und Aktivierung bleiben im Namecheap-Panel.
-- Namecheap: Mail-Weiterleitungen lesen, anlegen, ändern und löschen, auch mit mehreren Zielen und als Catch-all (`*@domain`). Weiterleitungen greifen bei Namecheap nur, wenn die Domain auf „Email Forwarding“ steht. Steht sie auf MX, zeigt Kastellan die Weiterleitungen als inaktiv und lehnt neue mit Hinweis ab, statt die MX-Records umzustellen.
-- Namecheap: DNS-Records lesen, anlegen, ändern und löschen. Namecheap ersetzt bei jedem Schreiben die ganze Zone; Kastellan liest deshalb vorher, ändert nur die betroffenen Records und schreibt alle anderen unverändert zurück, auch Namecheap-eigene Typen wie URL-Weiterleitungen. Der Mail-Typ der Zone (`EmailType`) geht immer mit, damit MX-Records erhalten bleiben. Record-Kennungen enthalten einen Hash über den Inhalt: Hat jemand den Record inzwischen geändert, lehnt Kastellan die Änderung ab. Zonen erscheinen nur für Domains mit Namecheap-Nameservern.
-- Namecheap: Domains lesen (Liste, Details mit Nameservern, Ablauf, DNS-Typ, Privacy und Registrar-Lock), Registrar-Lock und Domain-Privacy umschalten, Nameserver setzen oder auf Namecheap-DNS zurückstellen. Für `.de`-Domains gibt es bei Namecheap keinen Registrar-Lock; Kastellan meldet das, statt den Aufruf zu versuchen.
-- Namecheap-Adapter (Anfang): Client für die XML-API mit API-Key, API-Benutzer und Client-IP, Formular-POST, Fehlerübersetzung mit klaren Hinweisen zu IP-Freigabe, Key und fremden Nameservern, Pagination, Drosselung auf 50 Aufrufe pro Minute, 700 pro Stunde und 8000 pro Tag, Sandbox-Schalter. Verbindung in der App anlegbar, Health-Check zählt die Domains.
-- `tools/namecheap-probe.py` liest Domains, DNS, Weiterleitungen und Zertifikate über die Namecheap-API nur lesend und legt anonymisierte XML-Fixtures für den kommenden Namecheap-Adapter ab. Mit `--rescrub` lassen sich vorhandene Fixtures ohne API-Aufruf erneut bereinigen.
+- Namecheap-Verbindung mit API-Benutzer, Client-IP und API-Key. Die API muss bei Namecheap freigeschaltet und die öffentliche IPv4 des Macs dort freigegeben sein. Der Knopf „Ermitteln“ neben der Client-IP fragt die IPv4 einmalig über 1.1.1.1 ab, ein Kopier-Knopf hilft beim Eintragen im Namecheap-Panel. Ist die IP nicht freigegeben, nennt die Fehlermeldung die ermittelte Adresse. Der Health-Check zählt die Domains.
+- Namecheap-Domains: Liste und Details mit Nameservern, Ablauf, DNS-Typ, Privacy und Registrar-Lock. Lock und Domain-Privacy lassen sich umschalten, Nameserver setzen oder auf Namecheap-DNS zurückstellen. Für `.de`-Domains gibt es bei Namecheap keinen Registrar-Lock, Kastellan meldet das vorab.
+- Namecheap-DNS: Records lesen, anlegen, ändern und löschen. Namecheap ersetzt bei jedem Schreiben die ganze Zone. Kastellan liest deshalb vorher, ändert nur die betroffenen Records und schreibt alle anderen unverändert zurück, auch Namecheap-eigene Typen wie URL-Weiterleitungen. Der Mail-Typ der Zone geht immer mit, damit MX-Records erhalten bleiben. Hat jemand einen Record seit dem Lesen geändert, lehnt Kastellan die Änderung ab. Zonen erscheinen nur für Domains mit Namecheap-Nameservern.
+- Namecheap-Mail-Weiterleitungen: lesen, anlegen, ändern und löschen, mit mehreren Zielen und als Catch-all (`*@domain`). Sie greifen nur, wenn die Domain auf „Email Forwarding“ steht. Steht sie auf MX, zeigt Kastellan die Weiterleitungen als inaktiv und lehnt neue mit Hinweis ab, statt die MX-Records umzustellen.
+- Namecheap-Zertifikate lesend. Kauf und Aktivierung bleiben im Namecheap-Panel.
+- Hilfe-Abschnitt „Namecheap anbinden“, README mit Namecheap.
+- `tools/namecheap-probe.py` legt anonymisierte Fixtures aus echten Namecheap-Antworten ab, `--rescrub` bereinigt vorhandene Fixtures ohne API-Aufruf.
 
 ### Changed
 
-- Nameserver-Wechsel über `domain_update` (`extra.nameservers`) läuft bei allen Providern als Freigabe, wie Änderungen an MX-, NS- und SOA-Records. Die Vorschau nennt die neuen Nameserver.
+- Nameserver-Wechsel über `domain_update` (`extra.nameservers`) läuft bei allen Anbietern als Freigabe, wie Änderungen an MX-, NS- und SOA-Records. Die Vorschau nennt die neuen Nameserver.
+
+### Fixed
+
+- `kastellan-mcp` und der User-Agent der Provider-Aufrufe meldeten noch Version 0.1.0.
 
 ## [0.2.0] - 2026-09-28
 
