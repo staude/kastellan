@@ -33,6 +33,16 @@ struct ActionCatalogTests {
         #expect(confirmationRequired.contains(Capability(.server, .create)))
     }
 
+    @Test func nameserverChangeRequiresConfirmation() throws {
+        let spec = try #require(ActionCatalog.spec(named: "domain_update"))
+        let ctx = ActionContext(connectionID: "c", secrets: InMemorySecretProvider(), revealGeneratedPasswords: false)
+        let ns = try spec.build(ActionInput(["fqdn": .string("example.com"), "extra": .object(["nameservers": .array([.string("ns1.example.org"), .string("ns2.example.org")])])]), ctx)
+        #expect(ns.requiresConfirmation)
+        #expect(ns.preview == "Nameserver von example.com ändern auf ns1.example.org, ns2.example.org")
+        let lock = try spec.build(ActionInput(["fqdn": .string("example.com"), "extra": .object(["lock": .bool(true)])]), ctx)
+        #expect(!lock.requiresConfirmation)
+    }
+
     @Test func eachCapabilityHasOneSpec() {
         let caps = ActionCatalog.all.map(\.capability)
         #expect(Set(caps).count == caps.count)

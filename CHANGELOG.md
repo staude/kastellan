@@ -8,8 +8,13 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ### Added
 
+- Namecheap: Domains lesen (Liste, Details mit Nameservern, Ablauf, DNS-Typ, Privacy und Registrar-Lock), Registrar-Lock und Domain-Privacy umschalten, Nameserver setzen oder auf Namecheap-DNS zurückstellen. Für `.de`-Domains gibt es bei Namecheap keinen Registrar-Lock; Kastellan meldet das, statt den Aufruf zu versuchen.
 - Namecheap-Adapter (Anfang): Client für die XML-API mit API-Key, API-Benutzer und Client-IP, Formular-POST, Fehlerübersetzung mit klaren Hinweisen zu IP-Freigabe, Key und fremden Nameservern, Pagination, Drosselung auf 50 Aufrufe pro Minute, 700 pro Stunde und 8000 pro Tag, Sandbox-Schalter. Verbindung in der App anlegbar, Health-Check zählt die Domains.
 - `tools/namecheap-probe.py` liest Domains, DNS, Weiterleitungen und Zertifikate über die Namecheap-API nur lesend und legt anonymisierte XML-Fixtures für den kommenden Namecheap-Adapter ab. Mit `--rescrub` lassen sich vorhandene Fixtures ohne API-Aufruf erneut bereinigen.
+
+### Changed
+
+- Nameserver-Wechsel über `domain_update` (`extra.nameservers`) läuft bei allen Providern als Freigabe, wie Änderungen an MX-, NS- und SOA-Records. Die Vorschau nennt die neuen Nameserver.
 
 ## [0.2.0] - 2026-09-28
 
