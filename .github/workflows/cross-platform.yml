@@ -2,7 +2,8 @@ name: Linux und Windows
 
 # Baut die Kommandozeilen-Programme kastellan (Terminal-Oberfläche) und kastellan-mcp für Linux
 # (x86_64, arm64) und Windows (x64, arm64) und legt sie als Artefakte ab. Läuft bei Pull Requests,
-# bei Pushes auf Branches mit "crossplatform" im Namen und von Hand.
+# bei Pushes auf Branches mit "crossplatform" im Namen, von Hand und bei Release-Tags (v*); dann
+# hängt der Job "release" die Pakete an das GitHub-Release mit diesem Tag.
 
 on:
   pull_request:
@@ -11,6 +12,8 @@ on:
   push:
     branches:
       - '**crossplatform**'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 concurrency:
@@ -43,6 +46,13 @@ jobs:
           strip out/kastellan-linux-${{ matrix.arch }}/*
           out/kastellan-linux-${{ matrix.arch }}/kastellan --version
           tar -C out -czf kastellan-linux-${{ matrix.arch }}.tar.gz kastellan-linux-${{ matrix.arch }}
+      - name: Installationsskript prüfen
+        run: |
+          PREFIX="$RUNNER_TEMP/k" bash tools/install-linux.sh
+          "$RUNNER_TEMP/k/bin/kastellan" --version
+          "$RUNNER_TEMP/k/bin/kastellan" autocheck status
+          PREFIX="$RUNNER_TEMP/k" bash tools/install-linux.sh --uninstall
+          test ! -e "$RUNNER_TEMP/k/bin/kastellan"
       - uses: actions/upload-artifact@v4
         with:
           name: kastellan-linux-${{ matrix.arch }}
@@ -90,3 +100,28 @@ jobs:
       - name: Core testen
         continue-on-error: true
         run: swift test --package-path Packages/KastellanCore
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, windows]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: An das Release hängen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Das Release mit DMG und appcast.xml legt tools/package-release.sh lokal an; bis zu 30 Minuten warten.
+          for i in $(seq 1 60); do
+            gh release view "$TAG" -R "$REPO" >/dev/null 2>&1 && break
+            sleep 30
+          done
+          gh release view "$TAG" -R "$REPO" >/dev/null
+          gh release upload "$TAG" -R "$REPO" --clobber artifacts/*.tar.gz artifacts/*.zip

@@ -56,7 +56,7 @@ extension TUI {
         if modal != nil { return " Dialog: Enter bestätigen · Esc abbrechen" }
         let global = "1–6 Bereich · Tab weiter · P Profil · r neu laden · q beenden"
         let local: String = switch section {
-        case .overview: ""
+        case .overview: AutoCheck.supported ? "a Hintergrundprüfung ein/aus · " : ""
         case .connections: "↑↓ wählen · n neu · e bearbeiten · h prüfen · x löschen · "
         case .permissions: "↑↓ Ressource · ←→ Stufe · Leertaste Freigabe für Anlegen/Ändern · t Client · c Verbindung · "
         case .clients: "↑↓ wählen · n neuer Client · x widerrufen · "

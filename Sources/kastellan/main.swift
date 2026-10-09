@@ -4,6 +4,8 @@ import KastellanCore
 // kastellan: Terminal-Oberfläche für Kastellan auf macOS, Linux und Windows.
 //   kastellan             Oberfläche starten
 //   kastellan status      Zustand ohne Oberfläche ausgeben
+//   kastellan check       Freigaben melden, Verbindungen prüfen (für den Hintergrund-Timer)
+//   kastellan autocheck enable|disable|status
 //   kastellan --version
 
 let arguments = Array(CommandLine.arguments.dropFirst())
@@ -38,12 +40,34 @@ case "status":
         FileHandle.standardError.write(Data("Fehler: \(error.localizedDescription)\n".utf8))
         exit(1)
     }
+case "check":
+    do {
+        let report = try await Check.run(force: arguments.contains("--now"))
+        if !arguments.contains("--quiet") { report.forEach { print($0) } }
+    } catch {
+        FileHandle.standardError.write(Data("Fehler: \(error.localizedDescription)\n".utf8))
+        exit(1)
+    }
+case "autocheck":
+    do {
+        switch arguments.dropFirst().first {
+        case "enable": print(try AutoCheck.enable())
+        case "disable": print(try AutoCheck.disable())
+        default: print(AutoCheck.status())
+        }
+    } catch {
+        FileHandle.standardError.write(Data("Fehler: \(error.localizedDescription)\n".utf8))
+        exit(1)
+    }
 case "--help", "-h", "help":
     print("""
     kastellan \(KastellanCore.version): Terminal-Oberfläche für Kastellan.
 
       kastellan            Oberfläche starten (Verbindungen, Rechte, MCP-Clients, Freigaben, Protokoll)
       kastellan status     Zustand ohne Oberfläche ausgeben
+      kastellan check      neue Freigaben melden, Verbindungen höchstens stündlich prüfen (--now: sofort)
+      kastellan autocheck enable | disable | status
+                           Hintergrundprüfung per systemd-User-Timer (Linux), Meldungen über notify-send
       kastellan --version
 
     Daten liegen in \(AppPaths.home.path) (KASTELLAN_HOME überschreibt den Ort).

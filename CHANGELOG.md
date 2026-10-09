@@ -6,6 +6,13 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ## [Unreleased]
 
+### Added
+
+- Terminal-Oberfläche `kastellan` für macOS, Linux und Windows: Übersicht, Verbindungen (anlegen, bearbeiten, prüfen, löschen, Fähigkeiten), Rechte, MCP-Clients (Token anlegen, Eintrag für Claude Code oder Claude Desktop schreiben, widerrufen), Freigaben und Protokoll. `kastellan status` gibt den Zustand ohne Oberfläche aus. Steuerzeichen aus Vorschauen, Protokoll und Meldungen werden vor der Anzeige entfernt.
+- Linux und Windows: `kastellan` und `kastellan-mcp` laufen dort mit eigenem Speicher für Zugangsdaten (Secret Service über `secret-tool`, Windows-Anmeldeinformationsverwaltung) und eigenem Datenverzeichnis (`~/.local/state/kastellan`, `%LOCALAPPDATA%\Kastellan`). Programme für Linux x86_64/arm64 und Windows x64/arm64 kommen aus der CI und hängen ab jetzt an jedem Release.
+- `kastellan check` und `kastellan autocheck enable`: Hintergrundprüfung als systemd-User-Timer unter Linux. Neue Freigaben und Verbindungen, die ausfallen oder wieder erreichbar sind, erscheinen als Desktop-Mitteilung; die Verbindungen werden höchstens stündlich geprüft.
+- `tools/install-linux.sh` installiert nach `~/.local/bin`, aus dem Checkout gebaut oder vom Release geladen, und entfernt mit `--uninstall` alles wieder.
+
 ## [0.3.0] - 2026-10-09
 
 Namecheap ist der siebte Anbieter. Kastellan liest Domains, ändert DNS, Mail-Weiterleitungen und Domain-Einstellungen und liest Zertifikate. Nameserver-Wechsel brauchen ab dieser Version bei allen Anbietern eine Freigabe.

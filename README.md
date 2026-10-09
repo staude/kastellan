@@ -29,6 +29,22 @@ Danach in der App:
 2. Unter Rechte festlegen, was ein Assistent je Verbindung darf: keine, lesen, schreiben oder verwalten.
 3. Unter MCP-Clients einen Token für Claude Code oder Claude Desktop ausstellen und die Konfiguration schreiben lassen.
 
+### Linux und Windows
+
+Ohne macOS gibt es Kastellan als Terminal-Oberfläche `kastellan` mit dem MCP-Server `kastellan-mcp` daneben. Die Oberfläche kann dasselbe wie die App: Verbindungen anlegen und prüfen, Rechte setzen, MCP-Clients einrichten, Freigaben erteilen, das Protokoll lesen. `kastellan status` zeigt den Zustand ohne Oberfläche.
+
+Linux (x86_64, arm64), für den aktuellen Benutzer nach `~/.local/bin`:
+
+```sh
+tools/install-linux.sh --release      # fertige Programme vom neuesten Release
+tools/install-linux.sh                # aus dem Checkout bauen (Swift 6)
+kastellan autocheck enable            # Freigaben und Ausfälle als Desktop-Mitteilung (systemd-User-Timer)
+```
+
+Zugangsdaten liegen im Secret Service des Desktops (`secret-tool` aus libsecret), Daten in `~/.local/state/kastellan`.
+
+Windows (x64, arm64, experimentell): ZIP vom Release entpacken und `kastellan.exe` in Windows Terminal starten. Zugangsdaten liegen in der Anmeldeinformationsverwaltung, Daten in `%LOCALAPPDATA%\Kastellan`. Die Programme sind nicht signiert.
+
 ## MCP-Anbindung
 
 Der Server liegt unter `Kastellan.app/Contents/MacOS/kastellan-mcp`. Die App schreibt den Eintrag auf Knopfdruck, von Hand sieht er so aus:

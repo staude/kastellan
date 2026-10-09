@@ -335,6 +335,8 @@ extension TUI {
             Line("Zugangsdaten   ", Style.muted).adding((runtime.secrets as? any ManagedSecretStore)?.displayName ?? "–"),
             Line("MCP-Programm   ", Style.muted).adding(MCPConfigWriter.bundledExecutable().path),
             Line("System         ", Style.muted).adding(PlatformInfo.name),
+            Line("Hintergrund    ", Style.muted).adding(AutoCheck.status().replacingOccurrences(of: "Hintergrundprüfung: ", with: ""))
+                .adding(AutoCheck.supported ? "   (a ein/aus)" : "", Style.muted),
             Line(),
         ]
         if !pending.isEmpty {

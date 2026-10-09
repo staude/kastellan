@@ -159,7 +159,10 @@ final class TUI {
             break
         }
         switch section {
-        case .overview: break
+        case .overview:
+            if key == .char("a"), AutoCheck.supported {
+                do { status = AutoCheck.isEnabled ? try AutoCheck.disable() : try AutoCheck.enable() } catch { modal = .message("Hintergrundprüfung", [error.localizedDescription]) }
+            }
         case .connections: await connectionsKey(key)
         case .permissions: await permissionsKey(key)
         case .clients: await clientsKey(key)
