@@ -43,7 +43,9 @@ kastellan autocheck enable            # Freigaben und Ausfälle als Desktop-Mitt
 
 Zugangsdaten liegen im Secret Service des Desktops (`secret-tool` aus libsecret), Daten in `~/.local/state/kastellan`.
 
-Windows (x64, arm64, experimentell): ZIP vom Release entpacken und `kastellan.exe` in Windows Terminal starten. Zugangsdaten liegen in der Anmeldeinformationsverwaltung, Daten in `%LOCALAPPDATA%\Kastellan`. Die Programme sind nicht signiert.
+Die Linux- und Windows-Pakete sind nicht signiert; `SHA256SUMS` im Release erlaubt die Prüfung mit `sha256sum -c SHA256SUMS`. Windows warnt beim ersten Start per SmartScreen (Weitere Informationen → Trotzdem ausführen).
+
+Windows (x64, arm64, experimentell): ZIP vom Release entpacken und `kastellan.exe` in Windows Terminal starten. Zugangsdaten liegen in der Anmeldeinformationsverwaltung, Daten in `%LOCALAPPDATA%\Kastellan`.
 
 ## MCP-Anbindung
 

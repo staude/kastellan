@@ -46,6 +46,7 @@ jobs:
           strip out/kastellan-linux-${{ matrix.arch }}/*
           out/kastellan-linux-${{ matrix.arch }}/kastellan --version
           tar -C out -czf kastellan-linux-${{ matrix.arch }}.tar.gz kastellan-linux-${{ matrix.arch }}
+          sha256sum kastellan-linux-${{ matrix.arch }}.tar.gz > kastellan-linux-${{ matrix.arch }}.tar.gz.sha256
       - name: Installationsskript prüfen
         run: |
           PREFIX="$RUNNER_TEMP/k" bash tools/install-linux.sh
@@ -56,7 +57,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: kastellan-linux-${{ matrix.arch }}
-          path: kastellan-linux-${{ matrix.arch }}.tar.gz
+          path: |
+            kastellan-linux-${{ matrix.arch }}.tar.gz
+            kastellan-linux-${{ matrix.arch }}.tar.gz.sha256
 
   windows:
     strategy:
@@ -93,10 +96,14 @@ jobs:
           Get-ChildItem .build/release -Filter *.dll | Copy-Item -Destination $out
           & "$out/kastellan.exe" --version
           Compress-Archive -Path $out -DestinationPath "kastellan-windows-${{ matrix.arch }}.zip" -Force
+          $hash = (Get-FileHash "kastellan-windows-${{ matrix.arch }}.zip" -Algorithm SHA256).Hash.ToLower()
+          "$hash  kastellan-windows-${{ matrix.arch }}.zip`n" | Out-File -NoNewline -Encoding ascii "kastellan-windows-${{ matrix.arch }}.zip.sha256"
       - uses: actions/upload-artifact@v4
         with:
           name: kastellan-windows-${{ matrix.arch }}
-          path: kastellan-windows-${{ matrix.arch }}.zip
+          path: |
+            kastellan-windows-${{ matrix.arch }}.zip
+            kastellan-windows-${{ matrix.arch }}.zip.sha256
       - name: Core testen
         continue-on-error: true
         run: swift test --package-path Packages/KastellanCore
@@ -124,4 +131,6 @@ jobs:
             sleep 30
           done
           gh release view "$TAG" -R "$REPO" >/dev/null
-          gh release upload "$TAG" -R "$REPO" --clobber artifacts/*.tar.gz artifacts/*.zip
+          # Eine gemeinsame SHA256SUMS für Linux und Windows, Prüfung mit: sha256sum -c SHA256SUMS
+          (cd artifacts && cat *.sha256 > SHA256SUMS && sha256sum -c SHA256SUMS)
+          gh release upload "$TAG" -R "$REPO" --clobber artifacts/*.tar.gz artifacts/*.zip artifacts/SHA256SUMS
