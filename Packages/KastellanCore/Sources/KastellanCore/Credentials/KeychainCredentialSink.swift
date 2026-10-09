@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(Security)
 import Security
 
 /// Zugänge als Internet-Passwort im Login-Schlüsselbund: Server, Benutzername, Protokoll, Port, Label,
@@ -60,3 +61,4 @@ public struct KeychainCredentialSink: CredentialSink {
         return access
     }
 }
+#endif

@@ -96,11 +96,20 @@ public struct AuditLog: Sendable {
 
     static func appendLine(_ line: Data, to url: URL) throws {
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        #if os(Windows)
+        // Windows: kein POSIX-open mit Rechten; Anhängen über FileHandle genügt (eine Zeile je Aufruf).
+        if !FileManager.default.fileExists(atPath: url.path) { FileManager.default.createFile(atPath: url.path, contents: nil) }
+        let handle = try FileHandle(forWritingTo: url)
+        defer { try? handle.close() }
+        try handle.seekToEnd()
+        try handle.write(contentsOf: line)
+        #else
         let fd = open(url.path, O_WRONLY | O_APPEND | O_CREAT, 0o600)
         guard fd >= 0 else { throw KastellanError.internal("Audit-Log öffnen: errno \(errno)") }
         defer { close(fd) }
         let written = line.withUnsafeBytes { write(fd, $0.baseAddress, $0.count) }
         guard written == line.count else { throw KastellanError.internal("Audit-Log schreiben: \(written) von \(line.count) Bytes") }
+        #endif
     }
 }
 

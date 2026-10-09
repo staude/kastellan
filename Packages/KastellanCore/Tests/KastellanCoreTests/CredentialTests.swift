@@ -1,5 +1,8 @@
 import Foundation
 import Testing
+#if canImport(Security)
+import Security
+#endif
 @testable import KastellanCore
 
 /// Stub für bw/op: antwortet je nach Argumenten mit vorbereiteten Ausgaben und zeichnet Aufrufe auf.
@@ -19,6 +22,15 @@ actor StubCLI: CLIRunner {
 }
 
 struct CredentialTests {
+    /// Irgendein vorhandenes Programm als Platzhalter für bw/op; aufgerufen wird es nie, der Stub antwortet.
+    static var existingExecutable: String {
+        #if os(Windows)
+        "C:\\Windows\\System32\\cmd.exe"
+        #else
+        "/bin/echo"
+        #endif
+    }
+
     let record = CredentialRecord(title: CredentialRecord.title(for: .mailbox, identifier: "info@example.com", connectionLabel: "All-Inkl privat"),
                                   username: "info@example.com", password: "Pw-123", host: "w00abcde.kasserver.com", scheme: "imaps", port: 993,
                                   resource: .mailbox, identifier: "info@example.com", connectionID: "c1", connectionLabel: "All-Inkl privat", profileID: "p1")
@@ -63,7 +75,7 @@ struct CredentialTests {
         await cli.on("list organizations", #"[{"id":"o1","name":"Verein","status":2,"type":0,"enabled":true}]"#)
         await cli.on("create item", #"{"id":"item-1","name":"x"}"#)
 
-        let locked = BitwardenSink(executable: "/bin/echo", runner: cli)
+        let locked = BitwardenSink(executable: Self.existingExecutable, runner: cli)
         let st = await locked.status()
         #expect(st.state == "locked" && st.userEmail == "user@example.com" && st.version == "2025.9.0")
         await #expect(throws: KastellanError.self) { _ = try await locked.store(record, target: CredentialTarget()) }
@@ -129,6 +141,7 @@ struct CredentialTests {
         #expect(try await handoffs.list().count == 1)
     }
 
+    #if canImport(Security)
     @Test(.enabled(if: ProcessInfo.processInfo.environment["KASTELLAN_SKIP_KEYCHAIN_TESTS"] == nil))
     func keychainInternetPassword() async throws {
         let sink = KeychainCredentialSink(trustedPaths: [])
@@ -140,4 +153,5 @@ struct CredentialTests {
         let q: [String: Any] = [kSecClass as String: kSecClassInternetPassword, kSecAttrServer as String: r.host!, kSecAttrAccount as String: r.username]
         #expect(SecItemDelete(q as CFDictionary) == errSecSuccess)
     }
+    #endif
 }

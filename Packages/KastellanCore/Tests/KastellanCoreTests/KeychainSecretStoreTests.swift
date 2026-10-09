@@ -2,6 +2,8 @@ import Foundation
 import Testing
 @testable import KastellanCore
 
+#if canImport(Security)
+
 /// Läuft gegen den echten Login-Schlüsselbund mit eigenem Service-Namen und räumt auf.
 /// In CI ohne entsperrten Schlüsselbund kann SecItemAdd scheitern, deshalb `KASTELLAN_SKIP_KEYCHAIN_TESTS`.
 struct KeychainSecretStoreTests {
@@ -23,3 +25,4 @@ struct KeychainSecretStoreTests {
         try store.delete(connectionID: conn, key: "nie-da")
     }
 }
+#endif

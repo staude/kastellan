@@ -1,0 +1,3 @@
+# Fixtures und Testdaten byte-genau vergleichen, auch nach einem Checkout unter Windows.
+Packages/KastellanCore/Tests/KastellanCoreTests/Fixtures/** -text
+*.swift text eol=lf

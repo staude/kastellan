@@ -1,4 +1,11 @@
 import Foundation
+#if os(Windows)
+import WinSDK
+#elseif canImport(Glibc)
+import Glibc
+#elseif canImport(Musl)
+import Musl
+#endif
 
 /// Ablageorte von Kastellan. App und kastellan-mcp teilen sich dieses Verzeichnis.
 /// `KASTELLAN_HOME` überschreibt den Ordner (Tests, CI, mehrere Instanzen).
@@ -7,8 +14,21 @@ public enum AppPaths {
         if let override = ProcessInfo.processInfo.environment["KASTELLAN_HOME"], !override.isEmpty {
             return URL(fileURLWithPath: override, isDirectory: true)
         }
+        let env = ProcessInfo.processInfo.environment
+        #if os(macOS)
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         return support.appendingPathComponent("Kastellan", isDirectory: true)
+        #elseif os(Windows)
+        // %LOCALAPPDATA%\Kastellan, wie TorroMail.
+        let base = env["LOCALAPPDATA"].map { URL(fileURLWithPath: $0, isDirectory: true) }
+            ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("AppData/Local", isDirectory: true)
+        return base.appendingPathComponent("Kastellan", isDirectory: true)
+        #else
+        // $XDG_STATE_HOME/kastellan, Standard ~/.local/state/kastellan, wie TorroMail.
+        let base = env["XDG_STATE_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0, isDirectory: true) }
+            ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".local/state", isDirectory: true)
+        return base.appendingPathComponent("kastellan", isDirectory: true)
+        #endif
     }
 
     public static var connectionsFile: URL { home.appendingPathComponent("connections.json") }
@@ -25,8 +45,12 @@ public enum AppPaths {
     /// Legt das Home-Verzeichnis mit Unterordnern an (0700) und migriert alte Dateinamen.
     public static func ensureDirectories() throws {
         for dir in [home, policiesDirectory, pendingDirectory] {
+            #if os(Windows)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            #else
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true,
                                                     attributes: [.posixPermissions: 0o700])
+            #endif
         }
         // Bis 0.1: contexts.json. Profile hießen Kontexte.
         let legacy = home.appendingPathComponent("contexts.json")
@@ -43,8 +67,27 @@ enum AtomicFile {
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         let tmp = dir.appendingPathComponent(".\(url.lastPathComponent).\(UUID().uuidString).tmp")
         try data.write(to: tmp, options: [.atomic])
+        #if !os(Windows)
         try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: tmp.path)
+        #endif
+        try replace(url, with: tmp)
+    }
+
+    /// Ersetzt `url` atomar durch `tmp`. Foundation auf Linux und Windows kann `replaceItemAt` nur bei
+    /// vorhandenem Ziel; `rename` bzw. `MoveFileExW` ersetzen dort in einem Schritt.
+    private static func replace(_ url: URL, with tmp: URL) throws {
+        #if os(macOS)
         _ = try FileManager.default.replaceItemAt(url, withItemAt: tmp)
+        #elseif os(Windows)
+        let ok = tmp.path.withCString(encodedAs: UTF16.self) { from in
+            url.path.withCString(encodedAs: UTF16.self) { to in MoveFileExW(from, to, DWORD(MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) }
+        }
+        guard ok else { throw KastellanError.internal("Datei ersetzen fehlgeschlagen: \(url.path) (\(GetLastError()))") }
+        #else
+        guard rename(tmp.path, url.path) == 0 else {
+            throw KastellanError.internal("Datei ersetzen fehlgeschlagen: \(url.path) (errno \(errno))")
+        }
+        #endif
     }
 }
 

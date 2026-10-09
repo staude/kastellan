@@ -66,10 +66,19 @@ actor MittwaldStubTransport: MittwaldTransport {
 
     func enqueue(_ response: MittwaldResponse) { responses.append(response) }
 
+    /// Linux schreibt Header-Namen in Request-Feldern um; Tests lesen sie in Originalschreibweise und klein.
+    static func caseInsensitive(_ headers: [String: String]) -> [String: String] {
+        var out = headers
+        for (k, v) in headers { out[k.lowercased()] = v }
+        for (k, v) in headers where k.lowercased() == "authorization" { out["Authorization"] = v }
+        for (k, v) in headers where k.lowercased() == "content-type" { out["Content-Type"] = v }
+        return out
+    }
+
     func send(_ request: URLRequest) async throws -> MittwaldResponse {
         let body = request.httpBody.flatMap { try? JSONCoding.decoder.decode(JSONValue.self, from: $0) }
         requests.append(MittwaldRecordedRequest(method: request.httpMethod ?? "GET", url: request.url!,
-                                                headers: request.allHTTPHeaderFields ?? [:], body: body))
+                                                headers: Self.caseInsensitive(request.allHTTPHeaderFields ?? [:]), body: body))
         guard !responses.isEmpty else {
             throw KastellanError.internal("Stub-Transport: keine Antwort mehr für \(request.httpMethod ?? "?") \(request.url?.path ?? "?")")
         }
