@@ -1,5 +1,8 @@
 import Foundation
 import Testing
+#if canImport(Security)
+import Security
+#endif
 @testable import KastellanCore
 
 /// Stub für bw/op: antwortet je nach Argumenten mit vorbereiteten Ausgaben und zeichnet Aufrufe auf.
@@ -129,6 +132,7 @@ struct CredentialTests {
         #expect(try await handoffs.list().count == 1)
     }
 
+    #if canImport(Security)
     @Test(.enabled(if: ProcessInfo.processInfo.environment["KASTELLAN_SKIP_KEYCHAIN_TESTS"] == nil))
     func keychainInternetPassword() async throws {
         let sink = KeychainCredentialSink(trustedPaths: [])
@@ -140,4 +144,5 @@ struct CredentialTests {
         let q: [String: Any] = [kSecClass as String: kSecClassInternetPassword, kSecAttrServer as String: r.host!, kSecAttrAccount as String: r.username]
         #expect(SecItemDelete(q as CFDictionary) == errSecSuccess)
     }
+    #endif
 }

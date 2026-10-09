@@ -20,7 +20,16 @@ public struct MCPConfigWriter: Sendable {
             case .claudeCode:
                 return home.appendingPathComponent(".claude.json")
             case .claudeDesktop:
+                #if os(Windows)
+                let appData = ProcessInfo.processInfo.environment["APPDATA"].map { URL(fileURLWithPath: $0, isDirectory: true) }
+                    ?? home.appendingPathComponent("AppData/Roaming", isDirectory: true)
+                return appData.appendingPathComponent("Claude/claude_desktop_config.json")
+                #elseif os(macOS)
                 return home.appendingPathComponent("Library/Application Support/Claude/claude_desktop_config.json")
+                #else
+                // Kein offizielles Claude Desktop für Linux; inoffizielle Builds nutzen ~/.config/Claude.
+                return home.appendingPathComponent(".config/Claude/claude_desktop_config.json")
+                #endif
             }
         }
     }
@@ -38,8 +47,13 @@ public struct MCPConfigWriter: Sendable {
     /// Pfad des MCP-Binaries neben dem laufenden Programm (App oder kastellan-mcp selbst).
     public static func bundledExecutable() -> URL {
         let own = Bundle.main.executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0])
-        if own.lastPathComponent == "kastellan-mcp" { return own }
-        return own.deletingLastPathComponent().appendingPathComponent("kastellan-mcp")
+        #if os(Windows)
+        let name = "kastellan-mcp.exe"
+        #else
+        let name = "kastellan-mcp"
+        #endif
+        if own.lastPathComponent.lowercased() == name { return own }
+        return own.deletingLastPathComponent().appendingPathComponent(name)
     }
 
     public func entry(token: String, target: Target) -> [String: Any] {

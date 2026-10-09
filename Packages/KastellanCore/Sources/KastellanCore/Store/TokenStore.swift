@@ -1,5 +1,4 @@
 import Foundation
-import CryptoKit
 
 /// Ein von der App ausgestelltes Token für einen MCP-Client (Claude Code, Claude Desktop, Skript).
 /// Gespeichert wird nur der SHA-256-Hash. Das Klartext-Token sieht der Nutzer genau einmal.
@@ -75,9 +74,7 @@ public actor TokenStore {
         try loadIfNeeded()
         let slug = Self.slug(client)
         guard !slug.isEmpty else { throw KastellanError.invalidArgument("Client-Name ist leer") }
-        var bytes = [UInt8](repeating: 0, count: 24)
-        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        guard status == errSecSuccess else { throw KastellanError.internal("SecRandomCopyBytes: \(status)") }
+        let bytes = SecureRandom.bytes(24)
         let token = "\(Self.prefix)_\(slug)_" + bytes.map { String(format: "%02x", $0) }.joined()
         let record = ClientToken(id: UUID().uuidString.lowercased(), client: client, profileID: profileID,
                                  tokenHash: Self.hash(token), createdAt: Date(), lastUsedAt: nil, revokedAt: nil)
@@ -119,7 +116,7 @@ public actor TokenStore {
     }
 
     static func hash(_ token: String) -> String {
-        SHA256.hash(data: Data(token.utf8)).map { String(format: "%02x", $0) }.joined()
+        Digest.sha256Hex(Data(token.utf8))
     }
 
     static func slug(_ client: String) -> String {

@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(Security)
 import Security
 
 /// Secrets im macOS-Login-Schlüsselbund. Service `kastellan`, Account `<connection_id>/<key>`.
@@ -7,7 +8,8 @@ import Security
 /// werden beide Programme als vertrauenswürdig eingetragen. Keychain-Access-Groups scheiden aus, weil das
 /// eingebettete Kommandozeilen-Binary kein Provisioning-Profil hat und das System es mit diesem
 /// Entitlement sofort beendet.
-public struct KeychainSecretStore: SecretStore, Sendable {
+public struct KeychainSecretStore: ManagedSecretStore, Sendable {
+    public var displayName: String { "macOS-Schlüsselbund" }
     public let service: String
     /// Programme, die Einträge lesen dürfen. Standard: die laufende App und das eingebettete kastellan-mcp.
     public let trustedPaths: [String]
@@ -127,3 +129,4 @@ public struct KeychainSecretStore: SecretStore, Sendable {
         return .internal("Schlüsselbund \(what): \(text)")
     }
 }
+#endif

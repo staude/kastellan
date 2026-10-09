@@ -2,7 +2,8 @@ import Foundation
 import KastellanCore
 import MCP
 
-// kastellan-mcp: stdio-MCP-Server, eingebettet in Kastellan.app/Contents/MacOS.
+// kastellan-mcp: stdio-MCP-Server, eingebettet in Kastellan.app/Contents/MacOS, auf Linux und Windows
+// als eigenes Programm neben `kastellan`.
 //
 // Ohne Argumente startet der Server. Das Client-Token kommt aus KASTELLAN_TOKEN und wird gegen
 // tokens.json im Kastellan-Home geprüft. Ohne gültiges Token gibt es nur kastellan_version.
@@ -20,32 +21,6 @@ let arguments = Array(CommandLine.arguments.dropFirst())
 
 enum ContextStoreCompat {
     static func profiles() async throws -> [KastellanProfile] { try await ProfileStore().list() }
-}
-
-/// Beobachtet Verzeichnisse (Schreiben, Umbenennen) und ruft den Handler entprellt auf.
-final class DirectoryWatcher: @unchecked Sendable {
-    private var sources: [DispatchSourceFileSystemObject] = []
-    private var pending = false
-    private let queue = DispatchQueue(label: "kastellan.watch")
-
-    init(paths: [String], onChange: @escaping @Sendable () -> Void) {
-        for path in paths {
-            let fd = open(path, O_EVTONLY)
-            guard fd >= 0 else { continue }
-            let src = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fd, eventMask: [.write, .rename], queue: queue)
-            src.setEventHandler { [weak self] in
-                guard let self, !self.pending else { return }
-                self.pending = true
-                self.queue.asyncAfter(deadline: .now() + 0.5) {
-                    self.pending = false
-                    onChange()
-                }
-            }
-            src.setCancelHandler { close(fd) }
-            src.resume()
-            sources.append(src)
-        }
-    }
 }
 
 func fail(_ message: String) -> Never {
@@ -91,8 +66,14 @@ case "doctor":
     }
     print("kastellan-mcp \(KastellanCore.version), Home \(AppPaths.home.path)")
     print("Binary \(Bundle.main.executableURL?.path ?? "?")")
-    let store = KeychainSecretStore()
-    print("Vertraute Programme für den Schlüsselbund: \(store.trustedPaths.joined(separator: ", "))")
+    print("Plattform \(PlatformInfo.name)")
+    let store = makePlatformSecretStore()
+    #if canImport(Security)
+    if let keychain = store as? KeychainSecretStore {
+        print("Vertraute Programme für den Schlüsselbund: \(keychain.trustedPaths.joined(separator: ", "))")
+    }
+    #endif
+    print("Secrets: \(store.displayName)")
     for c in try await ProfileStore().list() { print("Profil \(c.slug) (\(c.name))") }
     for c in try await ConnectionStore().list() {
         let keys = (try? store.keys(connectionID: c.id)) ?? []
@@ -106,7 +87,7 @@ case "doctor":
         let cfg = (try? await credentialSettings.config(profileID: c.id)) ?? CredentialDeliveryConfig()
         print("Ablage \(c.name): \(cfg.kind.displayName)\(cfg.target.description.isEmpty ? "" : ", \(cfg.target.description)")")
     }
-    let waiting = (try? await CredentialHandoffStore(secrets: KeychainSecretStore()).list()) ?? []
+    let waiting = (try? await CredentialHandoffStore(secrets: makePlatformSecretStore()).list()) ?? []
     print("Wartende Übergaben: \(waiting.count)")
     exit(0)
 
@@ -164,7 +145,7 @@ case "install-config":
     exit(0)
 
 case nil:
-    if isatty(0) != 0 {
+    if TerminalCheck.stdinIsTerminal {
         // Interaktiv im Terminal gestartet: der Server wartet auf JSON-RPC über stdin, das wirkt wie „nichts passiert“.
         print("""
         kastellan-mcp \(KastellanCore.version): MCP-Server für Claude, spricht JSON-RPC über stdin/stdout.
@@ -178,7 +159,7 @@ case nil:
           kastellan-mcp install-config --client <name> --profile <profil> --target claude-code|claude-desktop
           kastellan-mcp --version
 
-        Einrichtung läuft über die App Kastellan (Menüleisten-Symbol mit Schlüssel, „Fenster öffnen“).
+        Einrichtung läuft über die App Kastellan oder im Terminal über `kastellan` (Terminal-Oberfläche).
         """)
         exit(0)
     }
@@ -223,7 +204,11 @@ await server.withMethodHandler(CallTool.self) { params in
     await toolServer.call(params.name, arguments: params.arguments)
 }
 
+#if os(Windows)
+let transport = LineStdioTransport()
+#else
 let transport = StdioTransport()
+#endif
 do {
     try await server.start(transport: transport)
 } catch {

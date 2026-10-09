@@ -1,4 +1,3 @@
-import CryptoKit
 import Foundation
 
 // DNS bei Namecheap. `domains.dns.getHosts` liefert alle Records einer Domain, `setHosts` ersetzt
@@ -31,7 +30,7 @@ extension NamecheapAdapter: DNSAdapter {
         var active: Bool
 
         var fingerprint: String {
-            let digest = SHA256.hash(data: Data("\(name.lowercased())|\(type)|\(address)|\(type == "MX" ? mxPref : 0)|\(ttl)".utf8))
+            let digest = Digest.sha256(Data("\(name.lowercased())|\(type)|\(address)|\(type == "MX" ? mxPref : 0)|\(ttl)".utf8))
             return digest.prefix(4).map { String(format: "%02x", $0) }.joined()
         }
     }
@@ -43,7 +42,7 @@ extension NamecheapAdapter: DNSAdapter {
 
         var hash: String {
             let text = hosts.map { "\($0.name.lowercased())|\($0.type)|\($0.address)|\($0.mxPref)|\($0.ttl)" }.sorted().joined(separator: "\n") + "\n" + emailType
-            return SHA256.hash(data: Data(text.utf8)).prefix(6).map { String(format: "%02x", $0) }.joined()
+            return Digest.sha256(Data(text.utf8)).prefix(6).map { String(format: "%02x", $0) }.joined()
         }
 
         /// Kennungen in Listenreihenfolge, Duplikate mit Zähler.

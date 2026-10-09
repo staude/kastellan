@@ -27,3 +27,4 @@ fixtures-raw/
 
 # Claude-Worktrees und Sitzungsdaten
 .claude/
+dist/

@@ -1,0 +1,91 @@
+name: Linux und Windows
+
+# Baut die Kommandozeilen-Programme kastellan (Terminal-Oberfläche) und kastellan-mcp für Linux
+# (x86_64, arm64) und Windows (x64, arm64) und legt sie als Artefakte ab. Läuft bei Pull Requests,
+# bei Pushes auf Branches mit "crossplatform" im Namen und von Hand.
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - '**crossplatform**'
+  workflow_dispatch:
+
+concurrency:
+  group: cross-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            arch: x86_64
+          - runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    container: swift:6.2-noble
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core testen
+        run: swift test --package-path Packages/KastellanCore
+      - name: Bauen
+        run: swift build -c release --static-swift-stdlib
+      - name: Paketieren
+        run: |
+          mkdir -p out/kastellan-linux-${{ matrix.arch }}
+          cp .build/release/kastellan .build/release/kastellan-mcp out/kastellan-linux-${{ matrix.arch }}/
+          strip out/kastellan-linux-${{ matrix.arch }}/*
+          out/kastellan-linux-${{ matrix.arch }}/kastellan --version
+          tar -C out -czf kastellan-linux-${{ matrix.arch }}.tar.gz kastellan-linux-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kastellan-linux-${{ matrix.arch }}
+          path: kastellan-linux-${{ matrix.arch }}.tar.gz
+
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: windows-2022
+            arch: x64
+            build_arch: amd64
+          - runner: windows-11-arm
+            arch: arm64
+            build_arch: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-6.2-release
+          tag: 6.2-RELEASE
+          build_arch: ${{ matrix.build_arch }}
+      - name: Core testen
+        run: swift test --package-path Packages/KastellanCore
+      - name: Bauen
+        run: swift build -c release
+      - name: Paketieren
+        shell: pwsh
+        run: |
+          $out = "out/kastellan-windows-${{ matrix.arch }}"
+          New-Item -ItemType Directory -Force -Path $out | Out-Null
+          Copy-Item .build/release/kastellan.exe, .build/release/kastellan-mcp.exe $out
+          # Laufzeit-DLLs der Swift-Toolchain beilegen, damit die Programme ohne installierte Toolchain starten.
+          $runtime = Split-Path (Get-Command swiftCore.dll -ErrorAction SilentlyContinue).Source -ErrorAction SilentlyContinue
+          if (-not $runtime) { $runtime = (Get-ChildItem -Path "$env:LOCALAPPDATA\Programs\Swift\Runtimes" -Recurse -Filter swiftCore.dll | Select-Object -First 1).DirectoryName }
+          if ($runtime) { Copy-Item "$runtime\*.dll" $out }
+          Get-ChildItem .build/release -Filter *.dll | Copy-Item -Destination $out
+          & "$out/kastellan.exe" --version
+          Compress-Archive -Path $out -DestinationPath "kastellan-windows-${{ matrix.arch }}.zip" -Force
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kastellan-windows-${{ matrix.arch }}
+          path: kastellan-windows-${{ matrix.arch }}.zip

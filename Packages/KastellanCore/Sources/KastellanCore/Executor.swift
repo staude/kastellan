@@ -46,7 +46,7 @@ public struct Runtime: Sendable {
                 assignments: AssignmentStore = AssignmentStore(),
                 tokens: TokenStore = TokenStore(), policies: PolicyStore = PolicyStore(),
                 pending: PendingActionStore = PendingActionStore(), audit: AuditLog = AuditLog(),
-                health: HealthLog = HealthLog(), secrets: any SecretStore = KeychainSecretStore(),
+                health: HealthLog = HealthLog(), secrets: any SecretStore = makePlatformSecretStore(),
                 registry: AdapterRegistry = AdapterRegistry(), credentialSettings: CredentialSettingsStore? = nil,
                 handoffs: CredentialHandoffStore? = nil) {
         self.profiles = profiles; self.connections = connections; self.assignments = assignments; self.tokens = tokens; self.policies = policies
@@ -60,7 +60,7 @@ public struct Runtime: Sendable {
     }
 
     /// Runtime im Kastellan-Home mit allen eingebauten Adaptern.
-    public static func standard(registry: AdapterRegistry, secrets: any SecretStore = KeychainSecretStore()) throws -> Runtime {
+    public static func standard(registry: AdapterRegistry, secrets: any SecretStore = makePlatformSecretStore()) throws -> Runtime {
         try AppPaths.ensureDirectories()
         return Runtime(secrets: secrets, registry: registry)
     }
