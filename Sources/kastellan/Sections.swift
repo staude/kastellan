@@ -259,7 +259,7 @@ extension TUI {
         guard action.status == .prepared, !busy.contains(action.id) else { return }
         switch key {
         case .char("f"), .enter:
-            modal = .confirm("Freigeben und ausführen?\n\(action.preview)") { [self] in
+            modal = .confirm("Freigeben und ausführen?\n\(Line.clean(action.preview))") { [self] in
                 background(action.id) { [self] in
                     do {
                         let done = try await service.approve(pendingID: action.id, by: user)
@@ -268,7 +268,7 @@ extension TUI {
                 }
             }
         case .char("v"):
-            modal = .confirm("Verwerfen?\n\(action.preview)") { [self] in
+            modal = .confirm("Verwerfen?\n\(Line.clean(action.preview))") { [self] in
                 do { _ = try await service.reject(pendingID: action.id, by: user); status = "Verworfen." } catch { modal = .message("Fehler", [error.localizedDescription]) }
                 await reload(light: true)
             }

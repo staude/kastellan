@@ -179,9 +179,19 @@ enum Style {
 struct Line {
     var parts: [(String, String)] = []
 
-    init(_ text: String = "", _ style: String = "") { if !text.isEmpty { parts.append((text, style)) } }
+    init(_ text: String = "", _ style: String = "") { if !text.isEmpty { parts.append((Self.clean(text), style)) } }
 
-    mutating func add(_ text: String, _ style: String = "") { parts.append((text, style)) }
+    mutating func add(_ text: String, _ style: String = "") { parts.append((Self.clean(text), style)) }
+
+    /// Steuerzeichen (C0, DEL, C1) aus angezeigtem Text entfernen. Vorschauen, Protokoll und Health-Meldungen
+    /// stammen teils von MCP-Clients oder Providern; eingeschleuste Escape-Sequenzen könnten sonst den
+    /// Bildschirm umschreiben, etwa den Text einer Freigabe. Stile kommen nur aus den `Style`-Konstanten.
+    static func clean(_ text: String) -> String {
+        guard text.unicodeScalars.contains(where: { $0.value < 0x20 || (0x7F...0x9F).contains($0.value) }) else { return text }
+        return String(String.UnicodeScalarView(text.unicodeScalars.map { s in
+            s.value < 0x20 || (0x7F...0x9F).contains(s.value) ? (s == "\t" ? " " : "\u{FFFD}") : s
+        }))
+    }
 
     func adding(_ text: String, _ style: String = "") -> Line { var l = self; l.add(text, style); return l }
 

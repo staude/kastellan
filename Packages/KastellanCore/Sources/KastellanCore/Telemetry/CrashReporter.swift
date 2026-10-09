@@ -32,6 +32,10 @@ public struct CrashReporter: Sendable {
     /// SIGTERM, SIGINT und SIGHUP als sauberes Ende behandeln: Marker entfernen, dann `onExit`.
     /// Ohne das würde jedes Beenden durch Installer oder MCP-Client wie ein Absturz aussehen.
     public func handleTerminationSignals(onExit: @escaping @Sendable () -> Void) {
+        #if os(Windows)
+        // Unter Windows gibt es keine Signalquellen in Dispatch; der Marker bleibt bei hartem Beenden liegen.
+        return
+        #else
         for sig in [SIGTERM, SIGINT, SIGHUP] {
             signal(sig, SIG_IGN)
             let source = DispatchSource.makeSignalSource(signal: sig, queue: .global())
@@ -43,9 +47,12 @@ public struct CrashReporter: Sendable {
             source.resume()
             Self.retainedSources.append(source)
         }
+        #endif
     }
 
+    #if !os(Windows)
     nonisolated(unsafe) private static var retainedSources: [DispatchSourceSignal] = []
+    #endif
 
     /// Diagnose: jüngsten Bericht seit `since` lesen und melden, ohne Marker zu verändern.
     public func report(latestFor processName: String, since: Date) async -> String {
