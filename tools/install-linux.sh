@@ -71,6 +71,8 @@ fi
 
 install -Dm755 "$src/kastellan" "$bin/kastellan"
 install -Dm755 "$src/kastellan-mcp" "$bin/kastellan-mcp"
+# Debug-Informationen entfernen, wie in der CI: aus rund 100 MB je Programm werden etwa 60 MB.
+if command -v strip >/dev/null; then strip "$bin/kastellan" "$bin/kastellan-mcp"; fi
 
 echo
 echo "$("$bin/kastellan" --version) nach $bin installiert."
