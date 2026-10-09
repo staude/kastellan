@@ -5,6 +5,13 @@
 // Die macOS-App entsteht weiter aus project.yml (XcodeGen) und nutzt dieselben Quellen für kastellan-mcp.
 import PackageDescription
 
+// Unter Windows eine gepatchte Kopie des MCP-SDK (Vendor/swift-sdk), weil das Original dort nicht baut.
+#if os(Windows)
+let mcpSDK: Package.Dependency = .package(path: "Vendor/swift-sdk")
+#else
+let mcpSDK: Package.Dependency = .package(url: "https://github.com/modelcontextprotocol/swift-sdk", from: "0.11.0")
+#endif
+
 let package = Package(
     name: "Kastellan",
     platforms: [.macOS(.v14)],
@@ -14,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "Packages/KastellanCore"),
-        .package(url: "https://github.com/modelcontextprotocol/swift-sdk", from: "0.11.0"),
+        mcpSDK,
         .package(url: "https://github.com/apple/swift-log.git", from: "1.5.0"),
     ],
     targets: [
