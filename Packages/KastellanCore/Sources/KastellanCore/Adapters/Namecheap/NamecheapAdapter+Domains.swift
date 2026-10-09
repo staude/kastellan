@@ -83,8 +83,7 @@ extension NamecheapAdapter: DomainAdapter {
             if ns.stringValue?.lowercased() == "default" {
                 try await client.call("namecheap.domains.dns.setDefault", [("SLD", sld), ("TLD", tld)])
             } else {
-                let list = ns.arrayValue?.compactMap(\.stringValue).map { Self.normalized($0) }.filter { !$0.isEmpty }
-                    ?? ns.stringValue.map { $0.split(separator: ",").map { Self.normalized(String($0)) }.filter { !$0.isEmpty } } ?? []
+                let list = Self.nameserverList(ns)
                 guard list.count >= 2, list.count <= 12 else {
                     throw KastellanError.invalidArgument("Namecheap: zwei bis zwölf Nameserver angeben oder \"default\" für Namecheap-DNS")
                 }
@@ -117,6 +116,17 @@ extension NamecheapAdapter: DomainAdapter {
 
     public func deleteDomain(fqdn: String) async throws {
         throw KastellanError.unsupported("Namecheap: Domains werden nicht über Kastellan gelöscht oder gekündigt")
+    }
+
+    /// Nameserver aus `extra.nameservers`: Liste oder kommagetrennter Text, normalisiert und ohne Leereinträge.
+    static func nameserverList(_ value: JSONValue) -> [String] {
+        var raw: [String] = []
+        if let array = value.arrayValue {
+            raw = array.compactMap(\.stringValue)
+        } else if let text = value.stringValue {
+            raw = text.split(separator: ",").map(String.init)
+        }
+        return raw.map { normalized($0) }.filter { !$0.isEmpty }
     }
 
     static func bool(_ value: JSONValue) -> Bool? {
