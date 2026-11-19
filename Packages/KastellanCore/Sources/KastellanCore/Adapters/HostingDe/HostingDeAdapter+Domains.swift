@@ -58,14 +58,16 @@ extension HostingDeAdapter: DomainAdapter {
 }
 
 extension HostingDeAdapter: SubdomainAdapter {
+    /// Ohne Filter laden und lokal auswählen: die Live-API lehnt das Filterfeld `VHostDomainName`
+    /// ab (11102 „Unknown filter field“), obwohl die Doku es nennt. VHosts je Konto sind wenige.
     public func listSubdomains(parent: String?) async throws -> [Subdomain] {
-        var filter: HostingDeFilter?
+        let vhosts = try await client.findAll("webhosting", "vhostsFind")
+        var subs = vhosts.compactMap { subdomain($0) }
         if let parent {
-            let p = Self.normalized(parent)
-            filter = .or([.equal("VHostDomainName", "*." + p), .equal("VHostDomainNameUnicode", "*." + p)])
+            let suffix = "." + Self.normalized(parent)
+            subs = subs.filter { $0.fqdn.lowercased().hasSuffix(suffix) }
         }
-        let vhosts = try await client.findAll("webhosting", "vhostsFind", filter: filter)
-        return vhosts.compactMap { subdomain($0) }.sorted { $0.fqdn < $1.fqdn }
+        return subs.sorted { $0.fqdn < $1.fqdn }
     }
 
     public func createSubdomain(fqdn: String, targetPath: String?, redirect: String?, extra: Extra) async throws -> Subdomain {
@@ -170,9 +172,13 @@ extension HostingDeAdapter: SubdomainAdapter {
         return p.isEmpty ? fqdn : p
     }
 
+    /// VHost per Name, lokal gesucht (siehe `listSubdomains`): ASCII- oder Unicode-Schreibweise.
     func vhost(named name: String) async throws -> JSONValue {
-        let filter = HostingDeFilter.or([.equal("VHostDomainName", name), .equal("VHostDomainNameUnicode", name)])
-        guard let item = try await client.findPage("webhosting", "vhostsFind", filter: filter, limit: 1).data.first else {
+        let wanted = Self.normalized(name)
+        let vhosts = try await client.findAll("webhosting", "vhostsFind")
+        guard let item = vhosts.first(where: { vhost in
+            ["domainName", "domainNameUnicode"].contains { vhost.string($0).map(Self.normalized) == wanted }
+        }) else {
             throw KastellanError.notFound("VHost \(name) bei hosting.de")
         }
         return item

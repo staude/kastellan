@@ -12,7 +12,9 @@ import Foundation
 extension HostingDeAdapter {
     static let defaultDatabaseProduct = "database-mariadb-single-v1-12m"
     static let defaultDatabaseQuotaMB = 512
-    static let webspaceReadOnly: Set<String> = ["accountId", "bundleId", "poolId", "addDate", "lastChangeDate", "status", "hostName",
+    // `bundleId` bleibt im Update: fehlt es, liest hosting.de das als Wechsel aus dem Paket und
+    // lehnt ab (10301 „Bundle membership cannot be changed from … to “).
+    static let webspaceReadOnly: Set<String> = ["accountId", "poolId", "addDate", "lastChangeDate", "status", "hostName",
                                                 "storageQuotaUsed", "webspaceName", "paidUntil", "renewOn", "deletionScheduledFor",
                                                 "restorableUntil", "serverIpv6", "accesses"]
     static let userReadOnly: Set<String> = ["accountId", "addDate", "lastChangeDate"]
@@ -84,6 +86,17 @@ extension HostingDeAdapter {
             }
         }
         return current
+    }
+
+    /// Trägt den Zugriff eines frisch angelegten Nutzers in den Webspace ein. Scheitert das, wird der
+    /// Nutzer wieder gelöscht, damit kein Nutzer ohne Zugriff übrig bleibt (in Kastellan unsichtbar).
+    func attachNewUser(_ userID: String, to webspace: JSONValue, accesses: [JSONValue]) async throws -> JSONValue {
+        do {
+            return try await writeWebspace(webspace, accesses: accesses)
+        } catch {
+            _ = try? await client.call("webhosting", "userDelete", ["userId": .string(userID)])
+            throw error
+        }
     }
 
     func webspaceUser(id: String) async throws -> JSONValue {
@@ -164,7 +177,7 @@ extension HostingDeAdapter: FTPUserAdapter {
             "userId": .string(userID), "ftpAccess": .bool(true), "sshAccess": .bool(false), "statsAccess": .bool(false),
             "homeDir": .string(Self.homeDir(homePath)),
         ]))
-        let updated = try await writeWebspace(webspace, accesses: accesses)
+        let updated = try await attachNewUser(userID, to: webspace, accesses: accesses)
         guard let access = updated.array("accesses").first(where: { $0.string("userId") == userID }) else {
             throw KastellanError.provider("hosting.de: Zugriff für Nutzer \(userID) fehlt nach webspaceUpdate")
         }
@@ -241,7 +254,7 @@ extension HostingDeAdapter: SSHUserAdapter {
         guard let userID = user.string("id") else { throw KastellanError.provider("hosting.de: userCreate lieferte keine ID") }
         var accesses = webspace.array("accesses")
         accesses.append(.object(["userId": .string(userID), "ftpAccess": .bool(false), "sshAccess": .bool(true), "statsAccess": .bool(false)]))
-        let updated = try await writeWebspace(webspace, accesses: accesses)
+        let updated = try await attachNewUser(userID, to: webspace, accesses: accesses)
         guard let access = updated.array("accesses").first(where: { $0.string("userId") == userID }) else {
             throw KastellanError.provider("hosting.de: Zugriff für Nutzer \(userID) fehlt nach webspaceUpdate")
         }

@@ -158,6 +158,36 @@ struct HostingDeHostingTests {
         #expect(accesses[1]["ftpAccess"] == .bool(false))
     }
 
+    @Test func createSSHUserKeepsBundleIdInWebspaceUpdate() async throws {
+        let sshAccess: JSONValue = .object(["userId": .string("u-9"), "userName": .string("webabc123_deploy"), "ftpAccess": .bool(false), "sshAccess": .bool(true)])
+        let (adapter, transport, _) = HostingDeFixtures.adapter([
+            try HostingDeFixtures.ok("webspaces-find"),
+            try Self.objectResponse(Self.newUser),
+            try Self.objectResponse(Self.webspace(accesses: [Self.adminAccess, sshAccess])),
+        ])
+        _ = try await adapter.createSSHUser(username: "deploy", publicKeys: ["ssh-ed25519 AAAA1 a"])
+        let requests = await transport.requests
+        #expect(requests[2].method == "webhosting/webspaceUpdate")
+        // Ohne `bundleId` lehnt hosting.de ab: 10301 „Bundle membership cannot be changed from … to “.
+        #expect(requests[2].param("webspace")?.string("bundleId") == "bundle-7")
+        #expect(requests[2].param("webspace")?.string("accountId") == nil)
+    }
+
+    @Test func createSSHUserDeletesUserWhenAccessFails() async throws {
+        let (adapter, transport, _) = HostingDeFixtures.adapter([
+            try HostingDeFixtures.ok("webspaces-find"),
+            try Self.objectResponse(Self.newUser),
+            HostingDeFixtures.json(#"{"status":"error","errors":[{"code":10301,"text":"Bundle membership cannot be changed","contextPath":"webspace.bundleId"}],"warnings":[]}"#),
+            HostingDeFixtures.json(#"{"status":"success","errors":[],"warnings":[],"metadata":{},"response":null}"#),
+        ])
+        await #expect(throws: (any Error).self) {
+            try await adapter.createSSHUser(username: "deploy", publicKeys: ["ssh-ed25519 AAAA1 a"])
+        }
+        let requests = await transport.requests
+        #expect(requests.map(\.method) == ["webhosting/webspacesFind", "webhosting/userCreate", "webhosting/webspaceUpdate", "webhosting/userDelete"])
+        #expect(requests[3].param("userId") == .string("u-9"))
+    }
+
     @Test func createSSHUserNeedsKeys() async throws {
         let (adapter, _, _) = HostingDeFixtures.adapter([])
         await #expect(throws: KastellanError.invalidArgument("SSH-Nutzer braucht mindestens einen öffentlichen Schlüssel")) {

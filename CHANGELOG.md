@@ -6,6 +6,12 @@ Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1
 
 ## [Unreleased]
 
+### Fixed
+
+- hosting.de: Subdomain ändern, Subdomains einer Domain auflisten, Verzeichnisschutz und Zertifikate scheiterten mit „Unknown filter field 'VHostDomainName'“. Kastellan lädt die VHosts jetzt ohne Filter und wählt lokal nach ASCII- oder Unicode-Namen aus.
+- hosting.de: SSH- und FTP-Nutzer anlegen und Cronjobs scheiterten bei Webspaces in einem Paket mit „Bundle membership cannot be changed“. `webspaceUpdate` schickt `bundleId` jetzt unverändert mit.
+- hosting.de: Scheitert nach dem Anlegen eines SSH- oder FTP-Nutzers das Eintragen des Webspace-Zugriffs, löscht Kastellan den Nutzer wieder, statt ihn ohne Zugriff liegen zu lassen.
+
 ## [0.3.0] - 2026-10-09
 
 Namecheap ist der siebte Anbieter. Kastellan liest Domains, ändert DNS, Mail-Weiterleitungen und Domain-Einstellungen und liest Zertifikate. Nameserver-Wechsel brauchen ab dieser Version bei allen Anbietern eine Freigabe.

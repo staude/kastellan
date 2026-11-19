@@ -47,12 +47,27 @@ struct HostingDeDomainTests {
         #expect(await transport.requests.first?.param("filter") == nil)
     }
 
-    @Test func listSubdomainsWithParentUsesWildcardFilter() async throws {
-        let (adapter, transport, _) = HostingDeFixtures.adapter([try HostingDeFixtures.ok("vhosts-find")])
-        _ = try await adapter.listSubdomains(parent: "example.com")
+    // Die Live-API kennt das Filterfeld `VHostDomainName` nicht (11102), deshalb ohne Filter und lokal ausgewählt.
+    @Test func listSubdomainsWithParentFiltersLocally() async throws {
+        let (adapter, transport, _) = HostingDeFixtures.adapter([
+            HostingDeFixtures.page([#"{"id":"vh-1","domainName":"app.example.com"}"#, #"{"id":"vh-2","domainName":"app.example.org"}"#,
+                                    #"{"id":"vh-3","domainName":"www.staging.example.com"}"#], page: 1, totalPages: 1),
+        ])
+        let subs = try await adapter.listSubdomains(parent: "Example.com.")
+        #expect(subs.map(\.fqdn) == ["app.example.com", "www.staging.example.com"])
         let req = try #require(await transport.requests.first)
         #expect(req.method == "webhosting/vhostsFind")
-        #expect(req.param("filter") == HostingDeFilter.or([.equal("VHostDomainName", "*.example.com"), .equal("VHostDomainNameUnicode", "*.example.com")]).json)
+        #expect(req.param("filter") == nil)
+    }
+
+    @Test func vhostLookupMatchesUnicodeName() async throws {
+        let (adapter, transport, _) = HostingDeFixtures.adapter([
+            HostingDeFixtures.page([#"{"id":"vh-1","domainName":"a.example.com"}"#,
+                                    #"{"id":"vh-2","domainName":"xn--mnchen-3ya.example.com","domainNameUnicode":"münchen.example.com"}"#], page: 1, totalPages: 1),
+        ])
+        let vhost = try await adapter.vhost(named: "münchen.example.com")
+        #expect(vhost.string("id") == "vh-2")
+        #expect(await transport.requests.first?.param("filter") == nil)
     }
 
     @Test func createSubdomainPicksSingleWebspaceAndWaits() async throws {
@@ -143,7 +158,7 @@ struct HostingDeDomainTests {
         ])
         try await adapter.deleteSubdomain(fqdn: "alt.example.com")
         let requests = await transport.requests
-        #expect(requests[0].param("filter") == HostingDeFilter.or([.equal("VHostDomainName", "alt.example.com"), .equal("VHostDomainNameUnicode", "alt.example.com")]).json)
+        #expect(requests[0].param("filter") == nil)
         #expect(requests[1].method == "webhosting/vhostDelete")
         #expect(requests[1].param("vhostId") == .string("vh-3"))
     }
